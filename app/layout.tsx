@@ -7,6 +7,7 @@ import "./builder.css";
 import "./palette.css";
 import "./theme-refresh.css";
 import "./mobile-nav.css";
+import "./admin.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://soundfactoryproductions.com"),
