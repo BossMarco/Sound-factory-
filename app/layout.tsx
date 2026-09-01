@@ -11,6 +11,7 @@ import "./admin.css";
 import "./video-reel.css";
 import "./service-media.css";
 import "./taste-pass.css";
+import "./location-grid.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://soundfactoryproductions.com"),

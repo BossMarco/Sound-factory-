@@ -1,0 +1,112 @@
+.locations-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(44px, 8vw, 140px);
+  align-items: start;
+  padding: clamp(72px, 10vw, 144px) 6vw;
+}
+
+.locations-grid__intro {
+  position: sticky;
+  top: 32px;
+}
+
+.locations-grid__intro > p {
+  margin: 0 0 18px;
+  color: rgba(41, 39, 32, 0.66);
+  font: 500 11px/1.25 "DM Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.locations-grid h2 {
+  max-width: 9ch;
+  font-size: clamp(3rem, 5.6vw, 5.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+}
+
+.locations-grid__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.locations-grid__list a {
+  position: relative;
+  display: flex;
+  min-height: 148px;
+  padding: 22px;
+  align-items: end;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(41, 39, 32, 0.28);
+  background: rgba(247, 245, 236, 0.22);
+  color: var(--ink);
+  font-size: clamp(1.55rem, 2.7vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 0.95;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.locations-grid__list a::after {
+  content: "\2192";
+  flex: 0 0 auto;
+  margin-left: 14px;
+  color: var(--ink);
+  font: 400 clamp(1.4rem, 2.2vw, 2.4rem)/1 Arial, sans-serif;
+  transition: transform 180ms ease;
+}
+
+.locations-grid__list a:hover,
+.locations-grid__list a:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+  transform: translateY(-3px);
+}
+
+.locations-grid__list a:hover::after,
+.locations-grid__list a:focus-visible::after {
+  color: var(--paper);
+  transform: translateX(5px);
+}
+
+.locations-grid__list a:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 760px) {
+  .locations-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 72px 26px 80px;
+  }
+
+  .locations-grid__intro {
+    position: static;
+  }
+
+  .locations-grid h2 {
+    max-width: 13ch;
+    font-size: clamp(2.85rem, 12vw, 4.5rem);
+  }
+
+  .locations-grid__list {
+    gap: 9px;
+  }
+
+  .locations-grid__list a {
+    min-height: 96px;
+    padding: 16px;
+    font-size: clamp(1.45rem, 6.6vw, 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locations-grid__list a,
+  .locations-grid__list a::after {
+    transition: none;
+  }
+}
