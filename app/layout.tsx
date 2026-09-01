@@ -9,6 +9,7 @@ import "./theme-refresh.css";
 import "./mobile-nav.css";
 import "./admin.css";
 import "./video-reel.css";
+import "./taste-pass.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://soundfactoryproductions.com"),
