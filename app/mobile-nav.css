@@ -14,4 +14,11 @@
   .mobile-menu[open] > summary::after { transform: rotate(-45deg); }
   .mobile-menu > div { top: 67px; padding: 30px 22px 34px; background: #292720; border-top: 1px solid rgba(255,255,255,.15); box-shadow: 0 18px 28px rgba(0,0,0,.18); }
   .mobile-menu > div a { font-size: 24px; letter-spacing: -.05em; }
+
+  /* The editorial two-column introduction needs a true single-column rhythm on phones. */
+  .intro.intro-statement { grid-template-columns: minmax(0, 1fr); gap: 34px; padding: 76px 26px 88px; align-items: start; }
+  .intro-statement > div { max-width: none; }
+  .intro-statement h2 { font-size: clamp(2.8rem, 12vw, 3.65rem); line-height: .94; margin-bottom: 26px; }
+  .intro-statement > div > p:last-child { max-width: 34rem; margin-bottom: 0; font-size: 16px; line-height: 1.65; }
+  .intro-statement aside { min-height: 0; padding: 30px 26px; box-shadow: 9px 9px 0 #647332; }
 }
