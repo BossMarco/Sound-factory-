@@ -4,7 +4,7 @@ type MetricRow = { visits: string; leads: string; conversion: string };
 type LeadRow = { id: number; name: string; email: string; phone: string; event_type: string; event_date: string | null; event_city: string | null; venue: string | null; package_name: string; selected_addons: string[]; notes: string | null; created_at: string };
 
 function sql() {
-  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL || Object.entries(process.env).find(([key, value]) => /(?:DATABASE|POSTGRES)_URL(?:_NON_POOLING)?$/.test(key) && value?.startsWith("postgres"))?.[1];
   if (!connectionString) return null;
   return neon(connectionString);
 }
