@@ -1,7 +1,3 @@
-import { headers } from "next/headers";
-import { getDashboardData } from "@/lib/db";
+import { AdminPanel } from "./panel";
 
-export const dynamic = "force-dynamic";
-
-function authorized(value: string | null) { if (!process.env.ADMIN_PASSWORD || !value?.startsWith("Basic ")) return false; const [email, password] = Buffer.from(value.slice(6), "base64").toString().split(":"); const allowed = (process.env.ADMIN_EMAILS || "marco@bossleveltech.com,soundfactoryrgv@hotmail.com").split(",").map((item) => item.trim().toLowerCase()); return allowed.includes(email.toLowerCase()) && password === process.env.ADMIN_PASSWORD; }
-export default async function AdminPage() { if (!authorized((await headers()).get("authorization"))) return <main className="admin"><h1>Authorization required</h1><p>Set <code>ADMIN_EMAILS</code> and <code>ADMIN_PASSWORD</code> in Vercel, then sign in with your admin email and password.</p></main>; const data = await getDashboardData(); if (!data) return <main className="admin"><h1>Connect the database</h1><p>Add a Neon Postgres database to the Vercel project, set <code>DATABASE_URL</code>, then run <code>db/schema.sql</code> in Neon’s SQL editor.</p></main>; return <main className="admin"><p className="eyebrow">SOUND FACTORY BACK OFFICE</p><h1>Traffic & inquiries</h1><section className="metrics"><div><b>{data.visits}</b><span>30-day visits</span></div><div><b>{data.leads}</b><span>30-day leads</span></div><div><b>{data.conversion.toFixed(1)}%</b><span>Conversion</span></div></section><h2>Recent inquiries</h2><div className="lead-list">{data.recentLeads.length ? data.recentLeads.map((lead) => <article key={lead.id}><b>{lead.name}</b><p>{lead.event_type} · {lead.package_name} · {lead.event_city || "City TBD"}</p><a href={`mailto:${lead.email}`}>{lead.email}</a> · <a href={`tel:${lead.phone}`}>{lead.phone}</a></article>) : <p>No inquiries yet.</p>}</div></main>; }
+export default function AdminPage() { return <AdminPanel />; }

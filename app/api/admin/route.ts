@@ -1,0 +1,4 @@
+import { NextResponse } from "next/server";
+import { getDashboardData } from "@/lib/db";
+function authorized(value: string | null) { if (!process.env.ADMIN_PASSWORD || !value?.startsWith("Basic ")) return false; const [email, password] = Buffer.from(value.slice(6), "base64").toString().split(":"); const allowed = (process.env.ADMIN_EMAILS || "marco@bossleveltech.com,soundfactoryrgv@hotmail.com").split(",").map((item) => item.trim().toLowerCase()); return allowed.includes(email.toLowerCase()) && password === process.env.ADMIN_PASSWORD; }
+export async function GET(request: Request) { if (!authorized(request.headers.get("authorization"))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const dashboard = await getDashboardData(); if (!dashboard) return NextResponse.json({ error: "Database not configured" }, { status: 503 }); return NextResponse.json(dashboard); }
