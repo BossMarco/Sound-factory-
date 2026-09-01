@@ -1,0 +1,13 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Footer, Header, Inquiry } from "../../components";
+
+const services: Record<string, { name: string; title: string; description: string; points: string[] }> = {
+  "wedding-dj": { name: "Wedding DJ", title: "Wedding DJ services in McAllen & the Rio Grande Valley", description: "Your wedding deserves a soundtrack that fits every part of the day—from the welcoming atmosphere to the dance floor celebration.", points: ["A music plan shaped around your celebration", "Thoughtful support for key moments and transitions", "Service throughout McAllen and the Rio Grande Valley"] },
+  "quinceanera-dj": { name: "Quinceañera DJ", title: "Quinceañera DJ services for the Rio Grande Valley", description: "Celebrate this once-in-a-lifetime milestone with music that brings generations together and keeps the energy moving.", points: ["Music for traditional and modern moments", "A party atmosphere tailored to your family", "Available across the Rio Grande Valley"] },
+  "private-event-dj": { name: "Private Event DJ", title: "Private event DJ services in McAllen, TX", description: "Birthdays, anniversaries, reunions, and celebrations deserve music that makes every guest want to stay a little longer.", points: ["A flexible soundtrack for your crowd", "Celebration-ready atmosphere", "McAllen and Valley-wide service"] },
+  "corporate-event-dj": { name: "Corporate Event DJ", title: "Corporate event DJ services in the Rio Grande Valley", description: "Give your company party, team celebration, or special event an upbeat, polished sound experience.", points: ["Professional event-minded planning", "Music scaled to the setting", "Available throughout the Valley"] }
+};
+export function generateStaticParams() { return Object.keys(services).map((service) => ({ service })); }
+export async function generateMetadata({ params }: { params: Promise<{ service: string }> }): Promise<Metadata> { const { service } = await params; const item = services[service]; return item ? { title: item.title, description: item.description } : {}; }
+export default async function ServicePage({ params }: { params: Promise<{ service: string }> }) { const { service } = await params; const item = services[service]; if (!item) notFound(); return <><Header /><main><section className="page-hero"><p className="eyebrow">SOUND FACTORY PRODUCTIONS</p><h1>{item.title}</h1><p>{item.description}</p></section><section className="content"><div><p className="eyebrow">THE EXPERIENCE</p><h2>Music built around your occasion.</h2></div><ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul></section><Inquiry title={`Planning a ${item.name.toLowerCase()}? Let’s connect.`} /></main><Footer /></>; }

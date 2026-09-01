@@ -1,0 +1,24 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+
+const packages = [
+  { name: "Signature", text: "6 hours · Live DJ & MC · professional audio & lighting · LED screen · architectural lighting · show dynamics" },
+  { name: "Deluxe", text: "Everything in Signature, plus LED screen banner, special effects, personalized props, and event staff." },
+  { name: "Custom", text: "Start with your vision and we’ll create the right production plan." }
+];
+const addons = ["Custom dance floor", "Interior cold sparklers", "Low fog effect", "Confetti cannon", "Bubble effect", "Personalized event props", "1-minute firework show", "2-3 minute firework show"];
+
+export function PackageBuilder() {
+  const [step, setStep] = useState(1); const [submitted, setSubmitted] = useState(false); const [sending, setSending] = useState(false); const [error, setError] = useState("");
+  const [form, setForm] = useState({ eventType: "Wedding", eventDate: "", eventCity: "McAllen", venue: "", packageName: "Signature", addons: [] as string[], name: "", email: "", phone: "", notes: "" });
+  const update = (key: string, value: string | string[]) => setForm((current) => ({ ...current, [key]: value }));
+  const toggleAddon = (item: string) => update("addons", form.addons.includes(item) ? form.addons.filter((value) => value !== item) : [...form.addons, item]);
+  async function submit(event: FormEvent) { event.preventDefault(); setSending(true); setError(""); const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); setSending(false); if (response.ok) setSubmitted(true); else setError((await response.json()).error || "Something went wrong."); }
+  if (submitted) return <section className="builder"><p className="eyebrow">INQUIRY RECEIVED</p><h2>You’re one step closer to an unforgettable event.</h2><p>Thank you, {form.name}. Sound Factory Productions will be in touch about your {form.eventType.toLowerCase()}.</p></section>;
+  return <section className="builder" id="build-package"><p className="eyebrow">PLAN YOUR EXPERIENCE</p><h2>Build your package.</h2><p className="builder-intro">Tell us the essentials. At the end, your request goes directly to our event team.</p><div className="builder-progress"><span className={step >= 1 ? "active" : ""}>1 Event</span><span className={step >= 2 ? "active" : ""}>2 Package</span><span className={step >= 3 ? "active" : ""}>3 Details</span></div><form onSubmit={submit}>
+    {step === 1 && <div className="builder-step"><label>What are you celebrating?<select value={form.eventType} onChange={(e) => update("eventType", e.target.value)}><option>Wedding</option><option>Quinceañera</option><option>Birthday</option><option>Corporate event</option><option>Private celebration</option><option>Other</option></select></label><label>Event date<input type="date" value={form.eventDate} onChange={(e) => update("eventDate", e.target.value)} /></label><label>City<input placeholder="McAllen" value={form.eventCity} onChange={(e) => update("eventCity", e.target.value)} /></label><label>Venue (if known)<input value={form.venue} onChange={(e) => update("venue", e.target.value)} /></label><button type="button" className="button" onClick={() => setStep(2)}>Choose a package</button></div>}
+    {step === 2 && <div className="builder-step"><div className="package-options">{packages.map((item) => <button type="button" key={item.name} className={form.packageName === item.name ? "selected" : ""} onClick={() => update("packageName", item.name)}><b>{item.name}</b><span>{item.text}</span></button>)}</div><p className="addon-label">Optional enhancements</p><div className="addons">{addons.map((item) => <label key={item}><input type="checkbox" checked={form.addons.includes(item)} onChange={() => toggleAddon(item)} />{item}</label>)}</div><div className="builder-actions"><button type="button" className="back" onClick={() => setStep(1)}>Back</button><button type="button" className="button" onClick={() => setStep(3)}>Your details</button></div></div>}
+    {step === 3 && <div className="builder-step"><label>Your name<input required value={form.name} onChange={(e) => update("name", e.target.value)} /></label><label>Email<input required type="email" value={form.email} onChange={(e) => update("email", e.target.value)} /></label><label>Phone<input required type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} /></label><label>Anything else we should know?<textarea rows={4} value={form.notes} onChange={(e) => update("notes", e.target.value)} /></label>{error && <p className="form-error">{error}</p>}<div className="builder-actions"><button type="button" className="back" onClick={() => setStep(2)}>Back</button><button className="button" disabled={sending}>{sending ? "Sending…" : "Send my request"}</button></div></div>}
+  </form></section>;
+}
