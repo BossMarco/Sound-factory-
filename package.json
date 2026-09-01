@@ -12,6 +12,8 @@
     "@vercel/analytics": "latest",
     "@neondatabase/serverless": "latest",
     "next": "latest",
+    "gsap": "latest",
+    "@gsap/react": "latest",
     "react": "latest",
     "react-dom": "latest"
   },
