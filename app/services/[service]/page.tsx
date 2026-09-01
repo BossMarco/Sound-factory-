@@ -110,6 +110,28 @@ const services: Record<string, Service> = {
       "Service for corporate gatherings throughout the Rio Grande Valley",
     ],
   },
+  "concert-production": {
+    name: "Concert & public event production",
+    title: "Concert & public event production in the Rio Grande Valley",
+    description:
+      "Bring reliable sound, lighting, LED visuals, and show-ready coordination to concerts, festivals, and public events across the Rio Grande Valley.",
+    points: [
+      "Production planning for outdoor stages, public gatherings, and live performances",
+      "Professional audio, lighting, LED, and MC support coordinated around your run of show",
+      "A flexible production partner for venues, cities, promoters, and event teams",
+    ],
+    media: {
+      eyebrow: "LIVE PRODUCTION",
+      title: "Built for the big stage.",
+      description:
+        "When the crowd is bigger and the cues matter more, the production has to be ready. We build clear, high-impact show environments for public events and live performances.",
+      video: "/concert-production.mp4",
+      poster: "/concert-production.jpg",
+      alt: "Performers on a lit outdoor concert stage at a public event",
+      caption: "Concert-scale production.",
+      orientation: "landscape",
+    },
+  },
 };
 
 export function generateStaticParams() {
