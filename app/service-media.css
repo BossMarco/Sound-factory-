@@ -1,0 +1,111 @@
+.service-media {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 112px 5vw 128px;
+}
+
+.service-media__inner {
+  width: min(100%, 1320px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: clamp(40px, 8vw, 132px);
+  align-items: center;
+}
+
+.service-media__copy {
+  max-width: 600px;
+}
+
+.service-media__copy .eyebrow {
+  color: #d59bb3;
+}
+
+.service-media__copy h2 {
+  margin-bottom: 26px;
+  font-size: clamp(3rem, 5vw, 5.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.07em;
+}
+
+.service-media__copy > p:last-child {
+  max-width: 34rem;
+  margin: 0;
+  color: rgba(247, 245, 236, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.service-media figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #111;
+}
+
+.service-media--landscape figure {
+  aspect-ratio: 16 / 9;
+}
+
+.service-media--portrait figure {
+  width: min(100%, 400px);
+  justify-self: end;
+  aspect-ratio: 9 / 16;
+}
+
+.service-media video {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-media figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.72));
+  pointer-events: none;
+}
+
+.service-media figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 18px;
+  bottom: 17px;
+  color: #fff;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-media video {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .service-media {
+    padding: 76px 26px 88px;
+  }
+
+  .service-media__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 36px;
+  }
+
+  .service-media__copy h2 {
+    font-size: clamp(2.9rem, 13vw, 4.2rem);
+  }
+
+  .service-media--portrait figure {
+    width: min(100%, 320px);
+    justify-self: auto;
+    align-self: center;
+  }
+}
