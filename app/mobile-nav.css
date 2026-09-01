@@ -1,0 +1,17 @@
+@media (max-width: 720px) {
+  .site-header { height: 68px; padding: 0 18px; border-bottom-color: #d4cabd; }
+  .brand { gap: 10px; }
+  .brand-mark, .brand-mark img { width: 44px; height: 44px; }
+  .brand-copy { gap: 3px; }
+  .brand-copy b { font-size: 11px; letter-spacing: -.06em; }
+  .brand-copy i { font-size: 6px; letter-spacing: .13em; }
+  .mobile-menu summary { display: grid; place-items: center; position: relative; width: 42px; height: 42px; background: #292720; color: transparent; font-size: 0; }
+  .mobile-menu summary span { display: none; }
+  .mobile-menu summary::before, .mobile-menu summary::after { content: ""; position: absolute; width: 17px; height: 1.5px; background: #f7f5ec; transition: transform .2s ease; }
+  .mobile-menu summary::before { transform: translateY(-4px); }
+  .mobile-menu summary::after { transform: translateY(4px); }
+  .mobile-menu[open] > summary::before { transform: rotate(45deg); }
+  .mobile-menu[open] > summary::after { transform: rotate(-45deg); }
+  .mobile-menu > div { top: 67px; padding: 30px 22px 34px; background: #292720; border-top: 1px solid rgba(255,255,255,.15); box-shadow: 0 18px 28px rgba(0,0,0,.18); }
+  .mobile-menu > div a { font-size: 24px; letter-spacing: -.05em; }
+}

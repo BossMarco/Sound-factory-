@@ -6,6 +6,7 @@ import "./home-overrides.css";
 import "./builder.css";
 import "./palette.css";
 import "./theme-refresh.css";
+import "./mobile-nav.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://soundfactoryproductions.com"),
