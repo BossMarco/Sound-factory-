@@ -2,27 +2,102 @@ import Link from "next/link";
 import Image from "next/image";
 import { Footer, Header, Inquiry } from "./components";
 import { PackageBuilder } from "./package-builder";
-import { MotionEffects } from "./motion-effects";
+import { ApolloHomeMotion } from "./apollo-home-motion";
 
 const services = [
-  ["Wedding DJs", "Music that supports every chapter of your celebration.", "wedding-dj"],
-  ["Quinceañera DJs", "A polished soundtrack for a night everyone will remember.", "quinceanera-dj"],
-  ["Cheerleading Events", "High-energy sound and production for showcases, competitions, and team celebrations.", "cheerleading-event-dj"],
-  ["Private Events", "Birthday parties, anniversaries, reunions, and more.", "private-event-dj"],
-  ["Corporate Events", "Professional music support for company gatherings and celebrations.", "corporate-event-dj"],
-  ["Concerts & Public Events", "Sound, lighting, LED visuals, and show-ready production for live crowds.", "concert-production"]
+  { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-sparklers.jpeg" },
+  { name: "Quinceañera DJs", description: "Music, lighting, and show moments made for a once-in-a-lifetime night.", slug: "quinceanera-dj", image: "/custom-led-display.jpeg" },
+  { name: "Cheerleading Events", description: "High-energy sound and show-ready production for teams, showcases, and competitions.", slug: "cheerleading-event-dj", image: "/cheer-stage.jpg" },
+  { name: "Private Events", description: "Birthdays, anniversaries, and celebrations with a room built around your people.", slug: "private-event-dj", image: "/event-ambience.jpg" },
+  { name: "Corporate Events", description: "Professional entertainment and production for gatherings with something to say.", slug: "corporate-event-dj", image: "/venue-uplighting.jpeg" },
+  { name: "Concerts & Public Events", description: "Sound, lighting, LED visuals, and show dynamics for a live crowd.", slug: "concert-production", image: "/concert-production.jpg" }
 ];
+
+const capabilities = ["DJ + MC", "Lighting design", "LED screens", "Cold sparklers", "Custom dance floors", "Photo booths"];
 const cities = ["McAllen", "Edinburg", "Mission", "Weslaco", "Pharr", "Harlingen", "Brownsville"];
-const signatureCapabilities = ["DJ + MC", "Lighting design", "LED screens", "Cold sparklers", "Custom dance floors", "Photo booths"];
 
 export default function Home() {
-  return <><Header /><main><section className="hero hero-photo"><Image src="/wedding-sparklers.jpeg" alt="Newlyweds sharing a dance beneath celebration sparklers" fill priority sizes="100vw" className="hero-image" /><div className="hero-shade" /><MotionEffects /><div className="hero-copy"><p className="eyebrow">MCALLEN · RIO GRANDE VALLEY</p><h1>Make it feel<br /><em>like a movie.</em></h1><p className="lede">DJ entertainment and elevated event production for celebrations, cheerleading events, corporate gatherings, and public events across the Rio Grande Valley.</p><a className="button" href="#build-package">Check your date</a></div></section>
-  <section className="production-strip" aria-label="Event production specialties">{signatureCapabilities.map((capability) => <span key={capability}>✦ {capability}</span>)}</section>
-  <section className="video-reel" aria-label="Sound Factory event production in motion"><div className="video-reel-copy"><h2>Built for the moments people replay.</h2><p>From a packed dance floor to a show-ready stage, every cue is designed to look as good as it feels.</p></div><div className="reel-grid"><figure className="reel-dj"><video autoPlay muted loop playsInline preload="metadata" poster="/event-ambience.jpg" aria-label="Guests enjoying a Sound Factory dance floor"><source src="/event-ambience.mp4" type="video/mp4" /></video><figcaption>Dance-floor energy.</figcaption></figure><figure className="reel-wedding"><video autoPlay muted loop playsInline preload="metadata" poster="/wedding-confetti.jpg" aria-label="Wedding confetti moment at a Sound Factory event"><source src="/wedding-confetti.mp4" type="video/mp4" /></video><figcaption>The big finish.</figcaption></figure><figure className="reel-production"><video autoPlay muted loop playsInline preload="metadata" poster="/cheer-stage.jpg" aria-label="Cheer competition stage prepared with Sound Factory lighting and production"><source src="/cheer-stage.mp4" type="video/mp4" /></video><figcaption>Show-ready production.</figcaption></figure></div></section>
-  <section className="intro intro-statement"><div><h2>Sound, lighting, and a room that feels completely transformed.</h2><p>The work speaks for itself: custom visual moments, uplighting, statement dance floors, and a packed dance-floor energy built around your celebration.</p></div><aside><span>FACTORY RGV</span><strong>Designed around your moment.</strong><p>Every setup is built to look as unforgettable as it sounds.</p></aside></section>
-  <section className="feature-image"><Image src="/venue-uplighting.jpeg" alt="Elegant event venue transformed with purple uplighting" width={1600} height={900} sizes="(max-width: 720px) 100vw, 84vw" /><p>Atmosphere is everything.</p></section>
-  <section className="grid-section" id="services"><div className="section-heading"><p className="eyebrow">EVENT SERVICES</p><h2>For the moments that matter.</h2><p>From a packed dance floor to a full cheer showcase, we’ll build the atmosphere around the occasion.</p></div><div className="cards">{services.map(([name, description, slug], index) => <Link className="card" href={`/services/${slug}`} key={name}><small>0{index + 1}</small><span className="card-mark">✦</span><h3>{name}</h3><p>{description}</p><span className="service-arrow">Explore service <b>→</b></span></Link>)}</div></section>
-  <section className="gallery"><div className="section-heading"><h2>Built to be remembered.</h2></div><div className="gallery-grid"><figure className="gallery-tall"><Image src="/mirrored-dance-floor.jpeg" alt="Couple dancing on a mirrored wedding dance floor" fill sizes="(max-width: 720px) 100vw, 42vw" /><figcaption>Mirrored dance floor</figcaption></figure><figure><Image src="/custom-led-display.jpeg" alt="Custom LED display at a quinceañera celebration" fill sizes="(max-width: 720px) 100vw, 42vw" /><figcaption>Custom LED display</figcaption></figure><figure><Image src="/photo-booth.jpeg" alt="Custom photo booth installation at an event" fill sizes="(max-width: 720px) 100vw, 42vw" /><figcaption>Photo booth experience</figcaption></figure></div></section>
-  <section className="production-signature"><div><h2>Production that makes the room feel different.</h2></div><p>Music is only the beginning. From the grand entrance through the last song, every detail is designed to keep the energy moving and the cameras rolling.</p><a href="#build-package">Build your package <span>↘</span></a></section>
-  <section className="locations locations-grid"><div className="locations-grid__intro"><p>Rio Grande Valley home base. Available across Texas.</p><h2>Your DJ, wherever the party is.</h2></div><div className="locations-grid__list">{cities.map((city) => <Link href={`/locations/${city.toLowerCase()}`} key={city}><span>{city}</span></Link>)}<Link href="/locations/texas"><span>Texas travel</span></Link></div></section><PackageBuilder /><Inquiry /></main><Footer /></>;
+  return <>
+    <Header />
+    <main className="apollo-home">
+      <ApolloHomeMotion />
+      <section className="apollo-hero">
+        <video className="apollo-hero__video" muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory concert production in motion">
+          <source src="/concert-production.mp4" type="video/mp4" />
+        </video>
+        <div className="apollo-hero__shade" />
+        <div className="apollo-hero__copy" data-apollo-hero-copy>
+          <p className="apollo-kicker">McAllen, Texas</p>
+          <h1>Make the room move.</h1>
+          <p>DJ entertainment and elevated production for celebrations, showcases, and live events across the Rio Grande Valley.</p>
+          <a className="apollo-button" href="#build-package">Check your date</a>
+        </div>
+        <p className="apollo-hero__side">Sound Factory Productions</p>
+      </section>
+
+      <section className="apollo-capabilities" aria-label="Event production specialties">
+        {capabilities.map((capability) => <span key={capability}>{capability}</span>)}
+      </section>
+
+      <section className="apollo-intro" data-apollo-reveal>
+        <p className="apollo-kicker">The full experience</p>
+        <h2>Not just music.<br />A whole atmosphere.</h2>
+        <p>From the first entrance to the final song, Sound Factory shapes the visual and musical energy that makes an event feel complete.</p>
+      </section>
+
+      <section className="apollo-feature" data-apollo-reveal>
+        <figure className="apollo-feature__primary">
+          <Image src="/wedding-confetti.jpg" alt="Wedding celebration with confetti and a packed dance floor" fill sizes="(max-width: 720px) 100vw, 68vw" />
+        </figure>
+        <div className="apollo-feature__copy">
+          <p className="apollo-kicker">For the big moments</p>
+          <h2>A soundtrack with a point of view.</h2>
+          <p>The right song lands differently when lighting, timing, and the crowd are all working together.</p>
+          <Link className="apollo-text-link" href="/gallery">See the gallery <span aria-hidden="true">↗</span></Link>
+        </div>
+        <figure className="apollo-feature__secondary">
+          <Image src="/venue-uplighting.jpeg" alt="Event venue transformed with uplighting" fill sizes="(max-width: 720px) 80vw, 27vw" />
+        </figure>
+      </section>
+
+      <section className="apollo-services" id="services" data-apollo-reveal>
+        <div className="apollo-services__heading">
+          <p className="apollo-kicker">What we build</p>
+          <h2>Every kind of celebration, dialed all the way in.</h2>
+        </div>
+        <div className="apollo-services__grid">
+          {services.map((service, index) => <Link className="apollo-service" href={`/services/${service.slug}`} key={service.slug}>
+            <Image src={service.image} alt="" fill sizes="(max-width: 720px) 100vw, 50vw" />
+            <span className="apollo-service__shade" />
+            <span className="apollo-service__number">0{index + 1}</span>
+            <span className="apollo-service__body"><strong>{service.name}</strong><span>{service.description}</span><b>Explore</b></span>
+          </Link>)}
+        </div>
+      </section>
+
+      <section className="apollo-statement" data-apollo-reveal>
+        <div>
+          <p className="apollo-kicker">A production-first approach</p>
+          <h2>More than a playlist. More than a setup.</h2>
+        </div>
+        <p>Sound, lighting, screens, effects, and thoughtful pacing make the room feel different. We bring the pieces together around the people and the occasion.</p>
+      </section>
+
+      <section className="apollo-showcase" data-apollo-reveal>
+        <figure className="apollo-showcase__tall"><Image src="/mirrored-dance-floor.jpeg" alt="Couple dancing on a mirrored event dance floor" fill sizes="(max-width: 720px) 100vw, 46vw" /></figure>
+        <div className="apollo-showcase__center"><p className="apollo-kicker">Designed to be remembered</p><h2>The room is part of the story.</h2><Link className="apollo-button apollo-button--light" href="#build-package">Build your package</Link></div>
+        <figure className="apollo-showcase__short"><Image src="/photo-booth.jpeg" alt="Photo booth experience at a Sound Factory event" fill sizes="(max-width: 720px) 80vw, 30vw" /></figure>
+      </section>
+
+      <section className="apollo-locations" data-apollo-reveal>
+        <p className="apollo-kicker">Rio Grande Valley home base</p>
+        <h2>Your DJ, wherever the party is.</h2>
+        <div>{cities.map((city) => <Link href={`/locations/${city.toLowerCase()}`} key={city}>{city}</Link>)}<Link href="/locations/texas">Texas travel</Link></div>
+      </section>
+
+      <PackageBuilder />
+      <Inquiry />
+    </main>
+    <Footer />
+  </>;
 }
