@@ -9,11 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@vercel/analytics": "latest",
-    "@neondatabase/serverless": "latest",
-    "next": "latest",
-    "gsap": "latest",
     "@gsap/react": "latest",
+    "@neondatabase/serverless": "latest",
+    "@treeui/react": "^0.4.1",
+    "@vercel/analytics": "latest",
+    "gsap": "latest",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest"
   },
