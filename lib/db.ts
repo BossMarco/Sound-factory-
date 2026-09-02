@@ -2,6 +2,9 @@ import { neon } from "@neondatabase/serverless";
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
 
 type MetricRow = { visits: string; leads: string };
+type TrafficBreakdownRow = { label: string; count: string };
+export type TrafficAttributionInput = { channel: string; source: string; referrerHost: string | null; utmSource: string | null; utmMedium: string | null; utmCampaign: string | null; city: string | null; state: string | null; country: string | null };
+export type TrafficBreakdown = { label: string; count: number };
 export type LeadRow = { id: number; name: string; email: string; phone: string; event_type: string; event_date: string | null; event_city: string | null; venue: string | null; package_name: string; selected_addons: string[]; notes: string | null; created_at: string };
 export type UserRole = "owner" | "admin" | "staff";
 export type AdminUser = { id: number; email: string; name: string; role: UserRole; active: boolean; created_at: string; last_login_at: string | null };
@@ -31,7 +34,16 @@ async function ensureSchema(database: NonNullable<ReturnType<typeof sql>>) {
   if (!schemaReady) {
     schemaReady = (async () => {
       await database`CREATE TABLE IF NOT EXISTS leads (id BIGSERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, event_type TEXT NOT NULL, event_date DATE, event_city TEXT, venue TEXT, package_name TEXT NOT NULL, selected_addons JSONB NOT NULL DEFAULT '[]'::jsonb, notes TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
-      await database`CREATE TABLE IF NOT EXISTS traffic_events (id BIGSERIAL PRIMARY KEY, event_name TEXT NOT NULL DEFAULT 'page_view', page_path TEXT NOT NULL, referrer TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
+      await database`CREATE TABLE IF NOT EXISTS traffic_events (id BIGSERIAL PRIMARY KEY, event_name TEXT NOT NULL DEFAULT 'page_view', page_path TEXT NOT NULL, referrer TEXT, traffic_channel TEXT, traffic_source TEXT, referrer_host TEXT, utm_source TEXT, utm_medium TEXT, utm_campaign TEXT, city TEXT, state TEXT, country TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS traffic_channel TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS traffic_source TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS referrer_host TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS utm_source TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS utm_medium TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS utm_campaign TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS city TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS state TEXT`;
+      await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS country TEXT`;
       await database`CREATE TABLE IF NOT EXISTS admin_users (id BIGSERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL, role TEXT NOT NULL CHECK (role IN ('owner', 'admin', 'staff')), password_hash TEXT NOT NULL, active BOOLEAN NOT NULL DEFAULT TRUE, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), last_login_at TIMESTAMPTZ)`;
       await database`CREATE TABLE IF NOT EXISTS admin_sessions (id BIGSERIAL PRIMARY KEY, user_id BIGINT NOT NULL REFERENCES admin_users(id) ON DELETE CASCADE, token_hash TEXT NOT NULL UNIQUE, expires_at TIMESTAMPTZ NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
       await database`CREATE TABLE IF NOT EXISTS admin_audit_log (id BIGSERIAL PRIMARY KEY, actor_id BIGINT REFERENCES admin_users(id) ON DELETE SET NULL, action TEXT NOT NULL, target_email TEXT, details JSONB NOT NULL DEFAULT '{}'::jsonb, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
@@ -65,19 +77,28 @@ export async function createLead(input: Omit<LeadRow, "id" | "created_at">) {
   await database`INSERT INTO leads (name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes) VALUES (${input.name}, ${input.email}, ${input.phone}, ${input.event_type}, ${input.event_date || null}, ${input.event_city || null}, ${input.venue || null}, ${input.package_name}, ${JSON.stringify(input.selected_addons)}, ${input.notes || null})`;
 }
 
-export async function recordTraffic(pagePath: string, referrer: string | null) {
+export async function recordTraffic(pagePath: string, referrer: string | null, attribution: TrafficAttributionInput) {
   const database = sql(); if (!database) return;
   await ensureSchema(database);
-  await database`INSERT INTO traffic_events (event_name, page_path, referrer) VALUES ('page_view', ${pagePath}, ${referrer})`;
+  await database`INSERT INTO traffic_events (event_name, page_path, referrer, traffic_channel, traffic_source, referrer_host, utm_source, utm_medium, utm_campaign, city, state, country) VALUES ('page_view', ${pagePath}, ${referrer}, ${attribution.channel}, ${attribution.source}, ${attribution.referrerHost}, ${attribution.utmSource}, ${attribution.utmMedium}, ${attribution.utmCampaign}, ${attribution.city}, ${attribution.state}, ${attribution.country})`;
 }
+
+const breakdown = (rows: TrafficBreakdownRow[]): TrafficBreakdown[] => rows.map((row) => ({ label: row.label, count: Number(row.count) }));
 
 export async function getDashboardData() {
   const database = sql(); if (!database) return null;
   await ensureSchema(database);
   const [metric] = await database`SELECT (SELECT COUNT(*) FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days') AS visits, (SELECT COUNT(*) FROM leads WHERE created_at > NOW() - INTERVAL '30 days') AS leads` as MetricRow[];
-  const leads = await database`SELECT id, name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes, created_at FROM leads ORDER BY created_at DESC LIMIT 100` as LeadRow[];
+  const [sources, states, cities, campaigns, pages, leads] = await Promise.all([
+    database`SELECT COALESCE(traffic_source, 'Unknown') AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' GROUP BY traffic_source ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
+    database`SELECT state AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND state IS NOT NULL GROUP BY state ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
+    database`SELECT CASE WHEN city IS NOT NULL AND state IS NOT NULL THEN city || ', ' || state WHEN city IS NOT NULL THEN city ELSE state END AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND (city IS NOT NULL OR state IS NOT NULL) GROUP BY city, state ORDER BY count DESC, label ASC LIMIT 8` as unknown as Promise<TrafficBreakdownRow[]>,
+    database`SELECT utm_campaign AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND utm_campaign IS NOT NULL GROUP BY utm_campaign ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
+    database`SELECT page_path AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' GROUP BY page_path ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
+    database`SELECT id, name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes, created_at FROM leads ORDER BY created_at DESC LIMIT 100` as unknown as Promise<LeadRow[]>,
+  ]);
   const visits = Number(metric?.visits || 0), leadCount = Number(metric?.leads || 0);
-  return { visits, leads: leadCount, conversion: visits ? (leadCount / visits) * 100 : 0, recentLeads: leads };
+  return { visits, leads: leadCount, conversion: visits ? (leadCount / visits) * 100 : 0, traffic: { sources: breakdown(sources), states: breakdown(states), cities: breakdown(cities), campaigns: breakdown(campaigns), pages: breakdown(pages) }, recentLeads: leads };
 }
 
 export async function authenticateAdmin(email: string, password: string) {
