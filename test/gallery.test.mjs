@@ -60,3 +60,21 @@ test("sitemap lists the English gallery route without a nonexistent Spanish gall
   assert.match(sitemapSource, /const spanishPaths = \["", \.\.\.servicePaths/);
   assert.doesNotMatch(sitemapSource, /paths\.map\(\(path\) => `\/es\$\{path\}`\)/);
 });
+
+test("gallery motion reveals media without forcing motion or video playback", () => {
+  const page = readFileSync(join(process.cwd(), "app", "gallery", "page.tsx"), "utf8");
+  const motionPath = join(process.cwd(), "app", "gallery", "gallery-motion.tsx");
+
+  assert.match(page, /import\s+\{\s*GalleryMotion\s*\}/);
+  assert.match(page, /<GalleryMotion>/);
+  assert.match(page, /data-gallery-item/);
+  assert.doesNotMatch(page, /autoPlay/);
+  assert.equal(existsSync(motionPath), true);
+
+  const motion = readFileSync(motionPath, "utf8");
+  assert.match(motion, /useGSAP/);
+  assert.match(motion, /ScrollTrigger/);
+  assert.match(motion, /prefers-reduced-motion: reduce/);
+  assert.match(motion, /data-gallery-item/);
+  assert.doesNotMatch(motion, /addEventListener\(\s*["']scroll/);
+});

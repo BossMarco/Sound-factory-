@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Footer, Header, Inquiry } from "../components";
 import { galleryItems } from "../../lib/gallery";
+import { GalleryMotion } from "./gallery-motion";
 import styles from "./gallery.module.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,8 @@ export default function GalleryPage() {
     <>
       <Header />
       <main className={styles.galleryPage}>
-        <section className={styles.intro}>
+        <GalleryMotion>
+          <section className={styles.intro} data-gallery-intro>
           <p className="eyebrow">SOUND FACTORY PRODUCTIONS</p>
           <h1>See the room<br /><em>come alive.</em></h1>
           <p>Weddings, celebrations, cheer events, concerts, and the production details that bring every moment together.</p>
@@ -22,7 +24,7 @@ export default function GalleryPage() {
 
         <section className={styles.mediaGrid} aria-label="Sound Factory event gallery">
           {galleryItems.map((item, index) => (
-            <figure className={styles.mediaItem} key={item.src}>
+            <figure className={styles.mediaItem} data-gallery-item key={item.src}>
               <div className={styles.mediaFrame}>
                 {item.type === "image" ? (
                   <Image
@@ -46,6 +48,7 @@ export default function GalleryPage() {
             </figure>
           ))}
         </section>
+        </GalleryMotion>
 
         <Inquiry title="Bring your event to life." />
       </main>
