@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header, Inquiry } from "../../components";
 
@@ -173,6 +174,16 @@ export default async function ServicePage({
             <h2>Music built around your occasion.</h2>
           </div>
           <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
+        </section>
+        <section className="content">
+          <div>
+            <p className="eyebrow">TEXAS TRAVEL</p>
+            <h2>Planning outside the Rio Grande Valley?</h2>
+          </div>
+          <div>
+            <p>Sound Factory Productions is based in McAllen and available to travel statewide for celebrations, corporate events, concerts, and public events.</p>
+            <Link className="text-link" href="/locations/texas">Explore Texas travel services →</Link>
+          </div>
         </section>
         {item.media && (
           <section className={`service-media service-media--${item.media.orientation}`}>
