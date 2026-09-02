@@ -1,0 +1,168 @@
+.galleryPage {
+  background: var(--paper);
+}
+
+.intro {
+  background: var(--ink);
+  color: var(--paper);
+  min-height: min(630px, 78dvh);
+  padding: clamp(4.5rem, 10vw, 9rem) 8vw 5rem;
+  display: grid;
+  align-content: end;
+}
+
+.intro h1 {
+  max-width: 10ch;
+  margin-bottom: 1.75rem;
+}
+
+.intro > p:last-child {
+  color: #d7d1c8;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  max-width: 36rem;
+  margin-bottom: 0;
+}
+
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(3rem, 7vw, 7rem) 5vw clamp(4rem, 8vw, 8rem);
+}
+
+.mediaItem {
+  grid-column: span 4;
+  margin: 0;
+}
+
+.mediaItem:nth-child(1),
+.mediaItem:nth-child(6) {
+  grid-column: span 8;
+}
+
+.mediaItem:nth-child(3),
+.mediaItem:nth-child(7),
+.mediaItem:nth-child(11) {
+  grid-column: span 3;
+}
+
+.mediaItem:nth-child(4),
+.mediaItem:nth-child(10) {
+  grid-column: span 5;
+}
+
+.mediaItem:nth-child(2),
+.mediaItem:nth-child(8),
+.mediaItem:nth-child(12) {
+  grid-column: span 4;
+}
+
+.mediaItem:nth-child(5),
+.mediaItem:nth-child(9),
+.mediaItem:nth-child(13) {
+  grid-column: span 7;
+}
+
+.mediaFrame {
+  aspect-ratio: 4 / 3;
+  background: #dad4ca;
+  overflow: hidden;
+  position: relative;
+}
+
+.mediaItem:nth-child(1) .mediaFrame,
+.mediaItem:nth-child(6) .mediaFrame {
+  aspect-ratio: 16 / 9;
+}
+
+.mediaItem:nth-child(3) .mediaFrame,
+.mediaItem:nth-child(4) .mediaFrame,
+.mediaItem:nth-child(7) .mediaFrame,
+.mediaItem:nth-child(10) .mediaFrame {
+  aspect-ratio: 3 / 4;
+}
+
+.mediaFrame :global(img),
+.mediaFrame video {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 420ms cubic-bezier(.16, 1, .3, 1);
+  width: 100%;
+}
+
+.mediaFrame :global(img) {
+  position: absolute;
+}
+
+.mediaItem:hover .mediaFrame :global(img),
+.mediaItem:focus-within .mediaFrame :global(img) {
+  transform: scale(1.035);
+}
+
+.mediaFrame video {
+  background: #1c1a18;
+  display: block;
+}
+
+.mediaItem figcaption {
+  align-items: baseline;
+  display: flex;
+  gap: .75rem;
+  justify-content: space-between;
+  padding-top: .7rem;
+}
+
+.mediaItem figcaption span {
+  color: var(--orange);
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.mediaItem figcaption p {
+  font-size: .9rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .intro {
+    min-height: 430px;
+    padding: 5rem 1.5rem 3.5rem;
+  }
+
+  .intro h1 {
+    font-size: clamp(3.3rem, 16vw, 5rem);
+  }
+
+  .mediaGrid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    padding: 3rem 1.25rem 4rem;
+  }
+
+  .mediaItem,
+  .mediaItem:nth-child(n) {
+    grid-column: 1;
+  }
+
+  .mediaItem:nth-child(n) .mediaFrame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .mediaItem:nth-child(3) .mediaFrame,
+  .mediaItem:nth-child(4) .mediaFrame,
+  .mediaItem:nth-child(7) .mediaFrame,
+  .mediaItem:nth-child(10) .mediaFrame {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mediaFrame :global(img) {
+    transition: none;
+  }
+}

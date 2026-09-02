@@ -11,10 +11,11 @@ const servicePaths = [
   "/services/concert-production",
 ];
 const locationPaths = ["/locations/texas", ...[...rgvLocationSlugs, ...texasTravelLocationSlugs].map((city) => `/locations/${city}`)];
-const paths = ["", ...servicePaths, ...locationPaths];
+const paths = ["", "/gallery", ...servicePaths, ...locationPaths];
+const spanishPaths = ["", ...servicePaths, ...locationPaths];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...paths, ...paths.map((path) => `/es${path}`)].map((path) => ({
+  return [...paths, ...spanishPaths.map((path) => `/es${path}`)].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
