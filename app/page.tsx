@@ -97,7 +97,10 @@ export default function Home() {
           <p className="apollo-kicker">Behind the scenes</p>
           <h2 id="instagram-heading">Follow the nights we make.</h2>
           <p>See recent events, lighting transformations, packed dance floors, and the work that goes into every Sound Factory production.</p>
-          <a className="apollo-social__link" href="https://www.instagram.com/factoryrgv?igsi=MTh0bTlvdWNwMzVvdg==" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span><span className="apollo-social__handle">@factoryrgv</span></a>
+          <div className="apollo-social__links" aria-label="Sound Factory social media">
+            <a className="apollo-social__link" href="https://www.instagram.com/factoryrgv?igsi=MTh0bTlvdWNwMzVvdg==" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span><span className="apollo-social__handle">@factoryrgv</span></a>
+            <a className="apollo-social__link" href="https://www.facebook.com/share/1DN2VJrcCH/?mibextid=wwXIfr" target="_blank" rel="noreferrer">Facebook <span aria-hidden="true">↗</span><span className="apollo-social__handle">Sound Factory Productions</span></a>
+          </div>
         </div>
       </section>
 

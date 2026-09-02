@@ -44,6 +44,11 @@
   line-height: 1.7;
 }
 
+.apollo-social__links {
+  display: grid;
+  gap: 20px;
+}
+
 .apollo-social__link {
   display: inline-flex;
   flex-wrap: wrap;
