@@ -1,0 +1,79 @@
+.contact-actions {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: grid;
+  justify-items: end;
+  gap: 0.7rem;
+}
+
+.contact-actions__toggle,
+.contact-actions__menu a {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  color: #fff;
+  font: 700 0.72rem/1 var(--font-sans, Arial, sans-serif);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.contact-actions__toggle {
+  min-height: 3.25rem;
+  padding: 0.85rem 1.05rem;
+  border-radius: 999px;
+  background: #df4f3b;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.28);
+  cursor: pointer;
+}
+
+.contact-actions__toggle span {
+  margin-left: 0.45rem;
+  font-size: 1rem;
+}
+
+.contact-actions__menu {
+  display: grid;
+  gap: 0.45rem;
+  width: min(13rem, calc(100vw - 2rem));
+}
+
+.contact-actions__menu a {
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  background: rgb(20 23 27 / 0.96);
+  text-align: center;
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
+}
+
+.contact-actions__toggle:hover,
+.contact-actions__menu a:hover {
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+
+.contact-actions__toggle:active,
+.contact-actions__menu a:active {
+  transform: translateY(0);
+}
+
+.contact-actions__toggle:focus-visible,
+.contact-actions__menu a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .contact-actions {
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-actions__toggle,
+  .contact-actions__menu a {
+    transition: none;
+  }
+}

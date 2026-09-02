@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { TrafficTracker } from "./traffic-tracker";
+import { ContactActions } from "./contact-actions";
 import "./globals.css";
 import "./home-overrides.css";
 import "./builder.css";
@@ -16,6 +17,7 @@ import "./location-grid.css";
 import "./texas-travel.css";
 import "./apollo-home.css";
 import "./social-links.css";
+import "./contact-actions.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://soundfactoryproductions.com"),
@@ -29,5 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}<TrafficTracker /><Analytics /></body></html>;
+  return <html lang="en"><body>{children}<ContactActions /><TrafficTracker /><Analytics /></body></html>;
 }
