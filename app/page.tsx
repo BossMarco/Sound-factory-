@@ -89,6 +89,18 @@ export default function Home() {
         <figure className="apollo-showcase__short"><Image src="/photo-booth.jpeg" alt="Photo booth experience at a Sound Factory event" fill sizes="(max-width: 720px) 80vw, 30vw" /></figure>
       </section>
 
+      <section className="apollo-social" data-apollo-reveal aria-labelledby="instagram-heading">
+        <figure className="apollo-social__image">
+          <Image src="/event-ambience.jpg" alt="Sound Factory lighting and production at a live event" fill sizes="(max-width: 720px) 100vw, 48vw" />
+        </figure>
+        <div className="apollo-social__copy">
+          <p className="apollo-kicker">Behind the scenes</p>
+          <h2 id="instagram-heading">Follow the nights we make.</h2>
+          <p>See recent events, lighting transformations, packed dance floors, and the work that goes into every Sound Factory production.</p>
+          <a className="apollo-social__link" href="https://www.instagram.com/factoryrgv?igsi=MTh0bTlvdWNwMzVvdg==" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span><span className="apollo-social__handle">@factoryrgv</span></a>
+        </div>
+      </section>
+
       <section className="apollo-locations" data-apollo-reveal>
         <p className="apollo-kicker">Rio Grande Valley home base</p>
         <h2>Your DJ, wherever the party is.</h2>

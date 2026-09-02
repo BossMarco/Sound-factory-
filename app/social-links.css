@@ -1,0 +1,105 @@
+.apollo-social {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(300px, .94fr);
+  gap: clamp(34px, 7vw, 116px);
+  align-items: center;
+  padding: clamp(78px, 12vw, 170px) 8vw;
+  background: var(--apollo-surface);
+}
+
+.apollo-social__image {
+  position: relative;
+  min-height: clamp(350px, 47vw, 620px);
+  margin: 0;
+  overflow: hidden;
+  background: #151719;
+}
+
+.apollo-social__image img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform .7s cubic-bezier(.16, 1, .3, 1);
+}
+
+.apollo-social:hover .apollo-social__image img {
+  transform: scale(1.035);
+}
+
+.apollo-social__copy {
+  max-width: 550px;
+}
+
+.apollo-social__copy h2 {
+  margin: 17px 0 25px;
+  font-size: clamp(3rem, 5.5vw, 6.2rem);
+  line-height: .9;
+  letter-spacing: -.075em;
+}
+
+.apollo-social__copy > p:not(.apollo-kicker) {
+  max-width: 43ch;
+  margin-bottom: 32px;
+  color: var(--apollo-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.apollo-social__link {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 11px;
+  align-items: baseline;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--apollo-accent);
+  color: var(--apollo-paper);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.apollo-social__link:hover {
+  color: var(--apollo-accent);
+}
+
+.apollo-social__link:focus-visible {
+  outline: 2px solid var(--apollo-paper);
+  outline-offset: 6px;
+}
+
+.apollo-social__link span[aria-hidden="true"] {
+  color: var(--apollo-accent);
+}
+
+.apollo-social__handle {
+  width: 100%;
+  margin-top: 7px;
+  color: var(--apollo-muted);
+  font: 500 10px/1.3 "DM Mono", monospace;
+  letter-spacing: .12em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apollo-social__image img,
+  .apollo-social:hover .apollo-social__image img,
+  .apollo-social__link {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .apollo-social {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 78px 7vw;
+  }
+
+  .apollo-social__image {
+    min-height: min(122vw, 510px);
+  }
+
+  .apollo-social__copy h2 {
+    max-width: 8ch;
+  }
+}
