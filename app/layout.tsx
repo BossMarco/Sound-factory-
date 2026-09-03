@@ -16,6 +16,7 @@ import "@treeui/react/style.css";
 import "./location-grid.css";
 import "./texas-travel.css";
 import "./apollo-home.css";
+import "./apollo-clone.css";
 import "./social-links.css";
 import "./social-icons.css";
 import "./hero-social.css";

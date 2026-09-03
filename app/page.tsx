@@ -28,12 +28,24 @@ export default function Home() {
         </video>
         <div className="apollo-hero__shade" />
         <div className="apollo-hero__copy" data-apollo-hero-copy>
-          <p className="apollo-kicker">McAllen, Texas</p>
-          <h1>Make the room move.</h1>
-          <p>DJ entertainment and elevated production for celebrations, showcases, and live events across the Rio Grande Valley.</p>
-          <a className="apollo-button" href="#build-package">Check your date</a>
-          <div className="apollo-hero__social"><SocialIcons /></div>
+          <p className="apollo-kicker">Sound Factory presents</p>
+          <h1>Make it<br />unforgettable.</h1>
+          <p>DJs, lighting, LED visuals, and production that keeps every entrance, toast, and dance floor on cue.</p>
+          <a className="apollo-button" href="#build-package">Plan your event <span aria-hidden="true">↗</span></a>
         </div>
+        <aside className="apollo-event-rail" aria-label="Sound Factory event specialties">
+          <p className="apollo-event-rail__eyebrow">Now booking · Rio Grande Valley</p>
+          <div className="apollo-event-rail__lead">
+            <span className="apollo-event-rail__date">RGV</span>
+            <div><strong>Your night.</strong><span>McAllen + beyond</span></div>
+          </div>
+          <div className="apollo-event-rail__items">
+            <a href="#services"><span>01</span><strong>Weddings</strong><em>Music · lights · moments</em></a>
+            <a href="#services"><span>02</span><strong>Quinceañeras</strong><em>Grand entrances · LEDs</em></a>
+            <a href="#services"><span>03</span><strong>Live events</strong><em>Sound · staging · show</em></a>
+          </div>
+          <a className="apollo-event-rail__link" href="#build-package">See what we build <span aria-hidden="true">→</span></a>
+        </aside>
         <p className="apollo-hero__side">Sound Factory Productions</p>
       </section>
 
