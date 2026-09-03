@@ -17,6 +17,7 @@ import "./location-grid.css";
 import "./texas-travel.css";
 import "./apollo-home.css";
 import "./social-links.css";
+import "./social-icons.css";
 import "./contact-actions.css";
 
 export const metadata: Metadata = {

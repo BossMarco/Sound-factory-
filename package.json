@@ -12,6 +12,7 @@
   "dependencies": {
     "@gsap/react": "latest",
     "@neondatabase/serverless": "latest",
+    "@tabler/icons-react": "^3.46.0",
     "@treeui/react": "^0.4.1",
     "@vercel/analytics": "latest",
     "gsap": "latest",
