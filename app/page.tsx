@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Footer, Header, Inquiry } from "./components";
 import { PackageBuilder } from "./package-builder";
 import { ApolloHomeMotion } from "./apollo-home-motion";
+import { SocialIcons } from "./social-icons";
 
 const services = [
   { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-sparklers.jpeg" },
@@ -31,6 +32,7 @@ export default function Home() {
           <h1>Make the room move.</h1>
           <p>DJ entertainment and elevated production for celebrations, showcases, and live events across the Rio Grande Valley.</p>
           <a className="apollo-button" href="#build-package">Check your date</a>
+          <div className="apollo-hero__social"><SocialIcons /></div>
         </div>
         <p className="apollo-hero__side">Sound Factory Productions</p>
       </section>

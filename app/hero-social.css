@@ -1,0 +1,14 @@
+.apollo-hero__social {
+  margin-top: 1.25rem;
+}
+
+.apollo-hero__social .social-icons__link {
+  border-color: rgb(255 255 255 / 0.52);
+  background: rgb(18 19 21 / 0.36);
+  color: #fff;
+}
+
+.apollo-hero__social .social-icons__link:hover {
+  border-color: #df4f3b;
+  background: #df4f3b;
+}

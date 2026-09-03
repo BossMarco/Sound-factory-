@@ -16,6 +16,8 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.doesNotMatch(page, /apollo-hero__video" autoPlay/);
   assert.match(page, /href="#build-package"/);
   assert.match(page, />Check your date</);
+  assert.match(page, /className="apollo-hero__social"/);
+  assert.match(page, /<SocialIcons\s*\/>/);
 });
 
 test("homepage keeps service discovery and gives cinematic motion an accessible fallback", () => {
