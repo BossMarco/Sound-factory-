@@ -15,7 +15,9 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.match(page, /src="\/concert-production\.mp4"/);
   assert.match(page, /media="\(max-width: 720px\)" src="\/pexels-dj-loop-mobile\.mp4"/);
   assert.match(page, /poster="\/concert-production\.jpg"/);
-  assert.doesNotMatch(page, /apollo-hero__video" autoPlay/);
+  assert.match(page, /className="apollo-hero__video" autoPlay muted loop playsInline/);
+  assert.match(page, /className="apollo-feature__media" autoPlay muted loop playsInline/);
+  assert.match(page, /src="\/wedding-confetti\.mp4"/);
   assert.match(page, /href="#build-package"/);
   assert.match(page, />Plan your event <span aria-hidden="true">↗<\/span><\/a>/);
   assert.match(page, /className="apollo-event-rail"/);
@@ -51,7 +53,7 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   const cloneStyles = readFileSync(cloneStylePath, "utf8");
   assert.match(motion, /prefers-reduced-motion: reduce/);
   assert.match(motion, /addEventListener\(\s*["']change/);
-  assert.match(motion, /video\.play\(/);
+  assert.match(motion, /autoplayVideo\.play\(/);
   assert.match(motion, /pexels-dj-loop-mobile\.jpg/);
   assert.doesNotMatch(motion, /addEventListener\(\s*["']scroll/);
   assert.match(styles, /min-height:\s*100dvh/);

@@ -11,6 +11,7 @@ export function ApolloHomeMotion() {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mobileMediaQuery = window.matchMedia("(max-width: 720px)");
     const video = document.querySelector<HTMLVideoElement>(".apollo-hero__video");
+    const autoplayVideos = Array.from(document.querySelectorAll<HTMLVideoElement>("[data-apollo-autoplay-video]"));
     let context: gsap.Context | undefined;
 
     const startAnimations = () => {
@@ -33,13 +34,15 @@ export function ApolloHomeMotion() {
       if (video) video.poster = mobileMediaQuery.matches ? "/pexels-dj-loop-mobile.jpg" : "/concert-production.jpg";
 
       if (mediaQuery.matches) {
-        video?.pause();
-        if (video) video.currentTime = 0;
+        autoplayVideos.forEach((autoplayVideo) => {
+          autoplayVideo.pause();
+          autoplayVideo.currentTime = 0;
+        });
         stopAnimations();
         return;
       }
 
-      if (video) void video.play().catch(() => undefined);
+      autoplayVideos.forEach((autoplayVideo) => void autoplayVideo.play().catch(() => undefined));
       startAnimations();
     };
 

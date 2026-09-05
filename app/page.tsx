@@ -25,7 +25,7 @@ export default function Home() {
       <ApolloHomeMotion />
       <section className="apollo-hero">
         <div className="apollo-hero__media">
-          <video className="apollo-hero__video" muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory DJ and concert production in motion">
+          <video className="apollo-hero__video" autoPlay muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory DJ and concert production in motion" data-apollo-autoplay-video>
             <source media="(max-width: 720px)" src="/pexels-dj-loop-mobile.mp4" type="video/mp4" />
             <source src="/concert-production.mp4" type="video/mp4" />
           </video>
@@ -65,7 +65,9 @@ export default function Home() {
 
       <section className="apollo-feature" data-apollo-reveal>
         <figure className="apollo-feature__primary">
-          <Image src="/wedding-confetti.jpg" alt="Wedding celebration with confetti and a packed dance floor" fill sizes="(max-width: 720px) 100vw, 68vw" />
+          <video className="apollo-feature__media" autoPlay muted loop playsInline preload="metadata" poster="/wedding-confetti.jpg" aria-label="Wedding celebration with confetti and a packed dance floor" data-apollo-autoplay-video>
+            <source src="/wedding-confetti.mp4" type="video/mp4" />
+          </video>
         </figure>
         <div className="apollo-feature__copy">
           <p className="apollo-kicker">For the big moments</p>
