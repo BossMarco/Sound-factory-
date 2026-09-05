@@ -13,7 +13,7 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.match(page, /className="apollo-hero"/);
   assert.match(page, /className="apollo-hero__media"/);
   assert.match(page, /src="\/concert-production\.mp4"/);
-  assert.match(page, /media="\(max-width: 720px\)" src="\/concert-production-mobile\.mp4"/);
+  assert.match(page, /media="\(max-width: 720px\)" src="\/pexels-dj-loop-mobile\.mp4"/);
   assert.match(page, /poster="\/concert-production\.jpg"/);
   assert.doesNotMatch(page, /apollo-hero__video" autoPlay/);
   assert.match(page, /href="#build-package"/);
@@ -52,7 +52,7 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   assert.match(motion, /prefers-reduced-motion: reduce/);
   assert.match(motion, /addEventListener\(\s*["']change/);
   assert.match(motion, /video\.play\(/);
-  assert.match(motion, /concert-production-mobile\.jpg/);
+  assert.match(motion, /pexels-dj-loop-mobile\.jpg/);
   assert.doesNotMatch(motion, /addEventListener\(\s*["']scroll/);
   assert.match(styles, /min-height:\s*100dvh/);
   assert.match(styles, /@media\s*\(max-width:\s*720px\)/);
@@ -69,6 +69,8 @@ test("homepage literal media paths resolve to verified local public assets", () 
   for (const assetPath of paths) {
     assert.equal(existsSync(join(publicDir, assetPath)), true, `missing local asset: ${assetPath}`);
   }
+  assert.equal(existsSync(join(publicDir, "pexels-dj-loop-mobile.mp4")), true);
+  assert.equal(existsSync(join(publicDir, "pexels-dj-loop-mobile.jpg")), true);
 });
 
 test("root layout loads the isolated homepage stylesheet after legacy layers", () => {

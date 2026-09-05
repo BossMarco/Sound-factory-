@@ -30,7 +30,7 @@ export function ApolloHomeMotion() {
     };
 
     const syncMotionPreference = () => {
-      if (video) video.poster = mobileMediaQuery.matches ? "/concert-production-mobile.jpg" : "/concert-production.jpg";
+      if (video) video.poster = mobileMediaQuery.matches ? "/pexels-dj-loop-mobile.jpg" : "/concert-production.jpg";
 
       if (mediaQuery.matches) {
         video?.pause();
