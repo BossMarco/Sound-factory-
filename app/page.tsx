@@ -24,16 +24,18 @@ export default function Home() {
     <main className="apollo-home">
       <ApolloHomeMotion />
       <section className="apollo-hero">
-        <video className="apollo-hero__video" muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory concert production in motion">
-          <source media="(max-width: 720px)" src="/concert-production-mobile.mp4" type="video/mp4" />
-          <source src="/concert-production.mp4" type="video/mp4" />
-        </video>
-        <div className="apollo-hero__shade" />
-        <div className="apollo-hero__copy" data-apollo-hero-copy>
-          <p className="apollo-kicker">Sound Factory presents</p>
-          <h1>Make it<br />unforgettable.</h1>
-          <p>DJs, lighting, LED visuals, and production that keeps every entrance, toast, and dance floor on cue.</p>
-          <a className="apollo-button" href="#build-package">Plan your event <span aria-hidden="true">↗</span></a>
+        <div className="apollo-hero__media">
+          <video className="apollo-hero__video" muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory concert production in motion">
+            <source media="(max-width: 720px)" src="/concert-production-mobile.mp4" type="video/mp4" />
+            <source src="/concert-production.mp4" type="video/mp4" />
+          </video>
+          <div className="apollo-hero__shade" />
+          <div className="apollo-hero__copy" data-apollo-hero-copy>
+            <p className="apollo-kicker">Sound Factory presents</p>
+            <h1>Make it<br />unforgettable.</h1>
+            <p>DJs, lighting, LED visuals, and production that keeps every entrance, toast, and dance floor on cue.</p>
+            <a className="apollo-button" href="#build-package">Plan your event <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
         <aside className="apollo-event-rail" aria-label="Sound Factory event specialties">
           <p className="apollo-event-rail__eyebrow">Now booking · Rio Grande Valley</p>

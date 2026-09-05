@@ -11,6 +11,7 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
 
   assert.match(page, /className="apollo-home"/);
   assert.match(page, /className="apollo-hero"/);
+  assert.match(page, /className="apollo-hero__media"/);
   assert.match(page, /src="\/concert-production\.mp4"/);
   assert.match(page, /media="\(max-width: 720px\)" src="\/concert-production-mobile\.mp4"/);
   assert.match(page, /poster="\/concert-production\.jpg"/);
@@ -33,6 +34,7 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   const page = homePage();
   const motionPath = join(appDir, "apollo-home-motion.tsx");
   const stylePath = join(appDir, "apollo-home.css");
+  const cloneStylePath = join(appDir, "apollo-clone.css");
 
   assert.match(page, /ApolloHomeMotion/);
   assert.match(page, /wedding-dj/);
@@ -46,6 +48,7 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
 
   const motion = readFileSync(motionPath, "utf8");
   const styles = readFileSync(stylePath, "utf8");
+  const cloneStyles = readFileSync(cloneStylePath, "utf8");
   assert.match(motion, /prefers-reduced-motion: reduce/);
   assert.match(motion, /addEventListener\(\s*["']change/);
   assert.match(motion, /video\.play\(/);
@@ -54,6 +57,9 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   assert.match(styles, /min-height:\s*100dvh/);
   assert.match(styles, /@media\s*\(max-width:\s*720px\)/);
   assert.match(styles, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+  assert.match(cloneStyles, /aspect-ratio:\s*9\s*\/\s*16/);
+  assert.match(cloneStyles, /object-fit:\s*contain/);
+  assert.match(cloneStyles, /overflow-wrap:\s*anywhere/);
 });
 
 test("homepage literal media paths resolve to verified local public assets", () => {
