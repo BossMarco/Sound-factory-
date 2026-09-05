@@ -15,13 +15,13 @@ Service area:
 - Texas travel: available statewide, including South Texas, the Coastal Bend, Central Texas, Greater Houston, North Texas, West Texas, the South Plains, and the Texas Panhandle
 
 Important pages:
-- https://soundfactoryproductions.com/
-- https://soundfactoryproductions.com/locations/texas
-- https://soundfactoryproductions.com/services/wedding-dj
-- https://soundfactoryproductions.com/services/quinceanera-dj
-- https://soundfactoryproductions.com/services/corporate-event-dj
-- https://soundfactoryproductions.com/services/concert-production
-- https://soundfactoryproductions.com/sitemap.xml
-- https://soundfactoryproductions.com/robots.txt
+- https://www.soundfactoryrgv.com/
+- https://www.soundfactoryrgv.com/locations/texas
+- https://www.soundfactoryrgv.com/services/wedding-dj
+- https://www.soundfactoryrgv.com/services/quinceanera-dj
+- https://www.soundfactoryrgv.com/services/corporate-event-dj
+- https://www.soundfactoryrgv.com/services/concert-production
+- https://www.soundfactoryrgv.com/sitemap.xml
+- https://www.soundfactoryrgv.com/robots.txt
 
 Contact: soundfactoryrgv@hotmail.com

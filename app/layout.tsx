@@ -23,7 +23,7 @@ import "./hero-social.css";
 import "./contact-actions.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://soundfactoryproductions.com"),
+  metadataBase: new URL("https://www.soundfactoryrgv.com"),
   title: { default: "Sound Factory Productions | McAllen DJ", template: "%s | Sound Factory Productions" },
   description: "Sound Factory Productions is a DJ in McAllen, Texas serving celebrations and events across the Rio Grande Valley.",
   keywords: ["DJ McAllen", "Rio Grande Valley DJ", "event DJ", "wedding DJ McAllen"],

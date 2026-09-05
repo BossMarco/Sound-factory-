@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { rgvLocationSlugs, texasTravelLocationSlugs } from "./locations/data";
 
-const base = "https://soundfactoryproductions.com";
+const base = "https://www.soundfactoryrgv.com";
 const servicePaths = [
   "/services/wedding-dj",
   "/services/quinceanera-dj",
