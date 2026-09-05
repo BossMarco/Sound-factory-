@@ -7,11 +7,11 @@ import { SocialIcons } from "./social-icons";
 import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
 
 const services = [
-  { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-sparklers.jpeg" },
+  { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-dance-floor.jpg" },
   { name: "Quinceañera DJs", description: "Music, lighting, and show moments made for a once-in-a-lifetime night.", slug: "quinceanera-dj", image: "/custom-led-display.jpeg" },
-  { name: "Cheerleading Events", description: "High-energy sound and show-ready production for teams, showcases, and competitions.", slug: "cheerleading-event-dj", image: "/cheer-stage.jpg" },
+  { name: "Cheerleading Events", description: "High-energy sound and show-ready production for teams, showcases, and competitions.", slug: "cheerleading-event-dj", image: "/cheer-celebration.jpg" },
   { name: "Private Events", description: "Birthdays, anniversaries, and celebrations with a room built around your people.", slug: "private-event-dj", image: "/event-ambience.jpg" },
-  { name: "Corporate Events", description: "Professional entertainment and production for gatherings with something to say.", slug: "corporate-event-dj", image: "/venue-uplighting.jpeg" },
+  { name: "Corporate Events", description: "Professional entertainment and production for gatherings with something to say.", slug: "corporate-event-dj", image: "/corporate-led-event.jpg" },
   { name: "Concerts & Public Events", description: "Sound, lighting, LED visuals, and show dynamics for a live crowd.", slug: "concert-production", image: "/concert-production.jpg" }
 ];
 
