@@ -106,7 +106,7 @@ export default function Home() {
       <section className="apollo-showcase" data-apollo-reveal>
         <figure className="apollo-showcase__tall"><Image src="/mirrored-dance-floor.jpeg" alt="Couple dancing on a mirrored event dance floor" fill sizes="(max-width: 720px) 100vw, 46vw" /></figure>
         <div className="apollo-showcase__center"><p className="apollo-kicker">Designed to be remembered</p><h2>The room is part of the story.</h2><Link className="apollo-button apollo-button--light" href="#build-package">Build your package</Link></div>
-        <figure className="apollo-showcase__short"><Image src="/photo-booth.jpeg" alt="Photo booth experience at a Sound Factory event" fill sizes="(max-width: 720px) 80vw, 30vw" /></figure>
+        <figure className="apollo-showcase__short"><Image src="/custom-led-display.jpeg" alt="Custom LED screen banner at a Sound Factory event" fill sizes="(max-width: 720px) 80vw, 30vw" /></figure>
       </section>
 
       <section className="apollo-social" data-apollo-reveal aria-labelledby="instagram-heading">

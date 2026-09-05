@@ -44,7 +44,7 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   assert.match(page, /cheerleading-event-dj/);
   assert.match(page, /concert-production/);
   assert.match(page, /wedding-confetti\.jpg/);
-  assert.match(page, /venue-uplighting\.jpeg/);
+  assert.match(page, /custom-led-display\.jpeg/);
   assert.equal(existsSync(motionPath), true);
   assert.equal(existsSync(stylePath), true);
 
