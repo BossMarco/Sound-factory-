@@ -21,8 +21,8 @@ export const galleryItems: GalleryItem[] = [
   },
   {
     type: "image",
-    src: "/photo-booth.jpeg",
-    alt: "Custom photo booth installation beside an event staircase",
+    src: "/special-fx-celebration.jpg",
+    alt: "Couple celebrating beneath falling confetti and special effects",
     caption: "Special FX",
   },
   {
@@ -48,6 +48,18 @@ export const galleryItems: GalleryItem[] = [
     src: "/wedding-confetti.jpg",
     alt: "Newlyweds surrounded by confetti during a reception celebration",
     caption: "Wedding confetti moment",
+  },
+  {
+    type: "image",
+    src: "/special-fx-wedding-confetti.jpg",
+    alt: "Bride and groom surrounded by falling confetti during a reception",
+    caption: "Wedding special FX",
+  },
+  {
+    type: "image",
+    src: "/special-fx-quinceanera.jpg",
+    alt: "Quinceañera lifted above a fog-covered dance floor beneath falling confetti",
+    caption: "Quinceañera special FX",
   },
   {
     type: "image",

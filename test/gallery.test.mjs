@@ -7,11 +7,13 @@ import { galleryItems } from "../lib/gallery.ts";
 const expectedSources = [
   "/venue-uplighting.jpeg",
   "/wedding-sparklers.jpeg",
-  "/photo-booth.jpeg",
+  "/special-fx-celebration.jpg",
   "/mirrored-dance-floor.jpeg",
   "/custom-led-display.jpeg",
   "/concert-production.jpg",
   "/wedding-confetti.jpg",
+  "/special-fx-wedding-confetti.jpg",
+  "/special-fx-quinceanera.jpg",
   "/cheer-stage.jpg",
   "/event-ambience.jpg",
   "/concert-production.mp4",
@@ -22,7 +24,10 @@ const expectedSources = [
 
 test("gallery includes every verified client event photo and video", () => {
   assert.deepEqual(galleryItems.map((item) => item.src), expectedSources);
-  assert.equal(galleryItems.length, 13);
+  assert.equal(galleryItems.length, 15);
+  for (const source of expectedSources) {
+    assert.equal(existsSync(join(process.cwd(), "public", source)), true, `missing gallery asset: ${source}`);
+  }
 });
 
 test("gallery labels the effects installation as Special FX", () => {
