@@ -23,7 +23,7 @@ export const galleryItems: GalleryItem[] = [
     type: "image",
     src: "/photo-booth.jpeg",
     alt: "Custom photo booth installation beside an event staircase",
-    caption: "Photo booth setup",
+    caption: "Special FX",
   },
   {
     type: "image",

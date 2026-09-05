@@ -25,6 +25,10 @@ test("gallery includes every verified client event photo and video", () => {
   assert.equal(galleryItems.length, 13);
 });
 
+test("gallery labels the effects installation as Special FX", () => {
+  assert.equal(galleryItems.some((item) => item.caption === "Special FX"), true);
+});
+
 test("gallery excludes logos, social graphics, and stock footage", () => {
   const sources = galleryItems.map((item) => item.src);
 
