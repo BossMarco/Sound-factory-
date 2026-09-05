@@ -4,6 +4,7 @@ import { Footer, Header, Inquiry } from "./components";
 import { PackageBuilder } from "./package-builder";
 import { ApolloHomeMotion } from "./apollo-home-motion";
 import { SocialIcons } from "./social-icons";
+import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
 
 const services = [
   { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-sparklers.jpeg" },
@@ -112,8 +113,18 @@ export default function Home() {
           <h2 id="instagram-heading">Follow the nights we make.</h2>
           <p>See recent events, lighting transformations, packed dance floors, and the work that goes into every Sound Factory production.</p>
           <div className="apollo-social__links" aria-label="Sound Factory social media">
-            <a className="apollo-social__link" href="https://www.instagram.com/factoryrgv?igsi=MTh0bTlvdWNwMzVvdg==" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span><span className="apollo-social__handle">@factoryrgv</span></a>
-            <a className="apollo-social__link" href="https://www.facebook.com/share/1DN2VJrcCH/?mibextid=wwXIfr" target="_blank" rel="noreferrer">Facebook <span aria-hidden="true">↗</span><span className="apollo-social__handle">Sound Factory Productions</span></a>
+            <a className="apollo-social__link" href="https://www.instagram.com/factoryrgv?igsi=MTh0bTlvdWNwMzVvdg==" target="_blank" rel="noreferrer" aria-label="Instagram @factoryrgv">
+              <IconBrandInstagram className="apollo-social__icon" aria-hidden="true" size={28} stroke={1.8} />
+              <span>Instagram</span>
+              <span aria-hidden="true">↗</span>
+              <span className="apollo-social__handle">@factoryrgv</span>
+            </a>
+            <a className="apollo-social__link" href="https://www.facebook.com/share/1DN2VJrcCH/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Facebook Sound Factory Productions">
+              <IconBrandFacebook className="apollo-social__icon" aria-hidden="true" size={28} stroke={1.8} />
+              <span>Facebook</span>
+              <span aria-hidden="true">↗</span>
+              <span className="apollo-social__handle">Sound Factory Productions</span>
+            </a>
           </div>
         </div>
       </section>

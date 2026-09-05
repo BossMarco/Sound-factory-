@@ -15,9 +15,17 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.match(page, /poster="\/concert-production\.jpg"/);
   assert.doesNotMatch(page, /apollo-hero__video" autoPlay/);
   assert.match(page, /href="#build-package"/);
-  assert.match(page, />Check your date</);
-  assert.match(page, /className="apollo-hero__social"/);
-  assert.match(page, /<SocialIcons\s*\/>/);
+  assert.match(page, />Plan your event <span aria-hidden="true">↗<\/span><\/a>/);
+  assert.match(page, /className="apollo-event-rail"/);
+  assert.match(page, /See what we build/);
+});
+
+test("homepage social links use their corresponding brand icons", () => {
+  const page = homePage();
+
+  assert.match(page, /IconBrandInstagram/);
+  assert.match(page, /IconBrandFacebook/);
+  assert.match(page, /className="apollo-social__icon"/);
 });
 
 test("homepage keeps service discovery and gives cinematic motion an accessible fallback", () => {

@@ -53,7 +53,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: 0 11px;
-  align-items: baseline;
+  align-items: center;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--apollo-accent);
   color: var(--apollo-paper);
@@ -64,6 +64,11 @@
 }
 
 .apollo-social__link:hover {
+  color: var(--apollo-accent);
+}
+
+.apollo-social__icon {
+  flex: 0 0 auto;
   color: var(--apollo-accent);
 }
 
