@@ -25,6 +25,7 @@ export default function Home() {
       <ApolloHomeMotion />
       <section className="apollo-hero">
         <video className="apollo-hero__video" muted loop playsInline preload="metadata" poster="/concert-production.jpg" aria-label="Sound Factory concert production in motion">
+          <source media="(max-width: 720px)" src="/concert-production-mobile.mp4" type="video/mp4" />
           <source src="/concert-production.mp4" type="video/mp4" />
         </video>
         <div className="apollo-hero__shade" />

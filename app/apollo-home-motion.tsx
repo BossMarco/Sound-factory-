@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export function ApolloHomeMotion() {
   useGSAP(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileMediaQuery = window.matchMedia("(max-width: 720px)");
     const video = document.querySelector<HTMLVideoElement>(".apollo-hero__video");
     let context: gsap.Context | undefined;
 
@@ -29,6 +30,8 @@ export function ApolloHomeMotion() {
     };
 
     const syncMotionPreference = () => {
+      if (video) video.poster = mobileMediaQuery.matches ? "/concert-production-mobile.jpg" : "/concert-production.jpg";
+
       if (mediaQuery.matches) {
         video?.pause();
         if (video) video.currentTime = 0;
