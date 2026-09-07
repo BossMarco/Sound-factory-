@@ -56,6 +56,7 @@
 .apollo-locations a:hover { background: #31dca5; color: #101514; }
 .apollo-home .builder { background: #101514; color: #f3f7f3; }
 .apollo-home .builder h2 { color: #f3f7f3; }
+.apollo-home .builder input, .apollo-home .builder select, .apollo-home .builder textarea { color: #101514; -webkit-text-fill-color: #101514; caret-color: #101514; }
 .apollo-home .inquiry { background: #151c1b; }
 .apollo-social__link { border-color: #31dca5; }
 .apollo-social__link:hover { color: #31dca5; }
