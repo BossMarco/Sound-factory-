@@ -12,8 +12,10 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.match(page, /className="apollo-home"/);
   assert.match(page, /className="apollo-hero"/);
   assert.match(page, /className="apollo-hero__media"/);
+  assert.match(page, /media="\(max-width: 720px\)" src="\/soundfactory-live-event-hero-mobile\.mp4"/);
   assert.match(page, /src="\/soundfactory-live-event-hero\.mp4"/);
   assert.match(page, /poster="\/soundfactory-live-event-hero\.jpg"/);
+  assert.match(page, /data-mobile-poster="\/soundfactory-live-event-hero-mobile\.jpg"/);
   assert.doesNotMatch(page, /media="\(max-width: 720px\)" src="\/pexels-dj-loop-mobile\.mp4"/);
   assert.doesNotMatch(page, /<source src="\/concert-production\.mp4" type="video\/mp4" \/>/);
   assert.match(page, /className="apollo-hero__video" autoPlay muted loop playsInline/);
@@ -60,12 +62,14 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   assert.match(motion, /prefers-reduced-motion: reduce/);
   assert.match(motion, /addEventListener\(\s*["']change/);
   assert.match(motion, /autoplayVideo\.play\(/);
+  assert.ok(motion.includes("video.dataset.mobilePoster"));
+  assert.match(motion, /heroPosterMediaQuery/);
   assert.doesNotMatch(motion, /pexels-dj-loop-mobile|concert-production\.jpg/);
   assert.doesNotMatch(motion, /addEventListener\(\s*["']scroll/);
   assert.match(styles, /min-height:\s*100dvh/);
   assert.match(styles, /@media\s*\(max-width:\s*720px\)/);
   assert.match(styles, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-  assert.match(cloneStyles, /aspect-ratio:\s*9\s*\/\s*16/);
+  assert.match(cloneStyles, /aspect-ratio:\s*4\s*\/\s*5/);
   assert.match(cloneStyles, /\.apollo-hero__video\s*\{\s*object-fit:\s*cover/);
   assert.doesNotMatch(cloneStyles, /\.apollo-hero__video\s*\{\s*object-fit:\s*contain/);
   assert.match(cloneStyles, /overflow-wrap:\s*anywhere/);

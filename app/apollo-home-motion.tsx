@@ -9,7 +9,17 @@ gsap.registerPlugin(ScrollTrigger);
 export function ApolloHomeMotion() {
   useGSAP(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const heroPosterMediaQuery = window.matchMedia("(max-width: 720px)");
     const video = document.querySelector<HTMLVideoElement>(".apollo-hero__video");
+    const desktopHeroPoster = video?.poster;
+    const syncHeroPoster = () => {
+      if (!video || !desktopHeroPoster) return;
+      video.poster = heroPosterMediaQuery.matches
+        ? new URL(video.dataset.mobilePoster ?? desktopHeroPoster, window.location.origin).href
+        : desktopHeroPoster;
+    };
+    syncHeroPoster();
+    heroPosterMediaQuery.addEventListener("change", syncHeroPoster);
     const autoplayVideos = Array.from(document.querySelectorAll<HTMLVideoElement>("[data-apollo-autoplay-video]"));
     const visibleVideos = new Set<HTMLVideoElement>();
     const playbackObserver = new IntersectionObserver((entries) => {
@@ -61,6 +71,7 @@ export function ApolloHomeMotion() {
 
     return () => {
       mediaQuery.removeEventListener("change", syncMotionPreference);
+      heroPosterMediaQuery.removeEventListener("change", syncHeroPoster);
       playbackObserver.disconnect();
       stopAnimations();
     };
