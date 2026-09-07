@@ -9,10 +9,10 @@ import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
 const services = [
   { name: "Wedding DJs", description: "A full dance floor and a soundtrack that follows every part of the celebration.", slug: "wedding-dj", image: "/wedding-dance-floor.jpg" },
   { name: "Quinceañera DJs", description: "Music, lighting, and show moments made for a once-in-a-lifetime night.", slug: "quinceanera-dj", image: "/custom-led-display.jpeg" },
-  { name: "Cheerleading Events", description: "High-energy sound and show-ready production for teams, showcases, and competitions.", slug: "cheerleading-event-dj", image: "/cheer-celebration.jpg" },
-  { name: "Private Events", description: "Birthdays, anniversaries, and celebrations with a room built around your people.", slug: "private-event-dj", image: "/event-ambience.jpg" },
-  { name: "Corporate Events", description: "Professional entertainment and production for gatherings with something to say.", slug: "corporate-event-dj", image: "/corporate-led-event.jpg" },
-  { name: "Concerts & Public Events", description: "Sound, lighting, LED visuals, and show dynamics for a live crowd.", slug: "concert-production", image: "/concert-production.jpg" }
+  { name: "Cheerleading Events", description: "High-energy sound and show-ready production for teams, showcases, and competitions.", slug: "cheerleading-event-dj", image: "/cheer-celebration.jpg", video: "/cheer-stage.mp4" },
+  { name: "Private Events", description: "Birthdays, anniversaries, and celebrations with a room built around your people.", slug: "private-event-dj", image: "/event-ambience.jpg", video: "/event-ambience.mp4" },
+  { name: "Corporate Events", description: "Professional entertainment and production for gatherings with something to say.", slug: "corporate-event-dj", image: "/corporate-led-event.jpg", video: "/pexels-production-loop.mp4" },
+  { name: "Concerts & Public Events", description: "Sound, lighting, LED visuals, and show dynamics for a live crowd.", slug: "concert-production", image: "/concert-production.jpg", video: "/concert-production.mp4" }
 ];
 
 const capabilities = ["DJ + MC", "Lighting design", "LED screens", "Cold sparklers", "Custom dance floors", "Photo booths"];
@@ -87,7 +87,7 @@ export default function Home() {
         </div>
         <div className="apollo-services__grid">
           {services.map((service, index) => <Link className="apollo-service" href={`/services/${service.slug}`} key={service.slug}>
-            <Image src={service.image} alt="" fill sizes="(max-width: 720px) 100vw, 50vw" />
+            {service.video ? <video className="apollo-service__media" autoPlay muted loop playsInline preload="metadata" poster={service.image} aria-label={`${service.name} in motion`} data-apollo-autoplay-video><source src={service.video} type="video/mp4" /></video> : <Image src={service.image} alt="" fill sizes="(max-width: 720px) 100vw, 50vw" />}
             <span className="apollo-service__shade" />
             <span className="apollo-service__number">0{index + 1}</span>
             <span className="apollo-service__body"><strong>{service.name}</strong><span>{service.description}</span><b>Explore</b></span>
@@ -111,7 +111,9 @@ export default function Home() {
 
       <section className="apollo-social" data-apollo-reveal aria-labelledby="instagram-heading">
         <figure className="apollo-social__image">
-          <Image src="/event-ambience.jpg" alt="Sound Factory lighting and production at a live event" fill sizes="(max-width: 720px) 100vw, 48vw" />
+          <video className="apollo-social__media" autoPlay muted loop playsInline preload="metadata" poster="/event-ambience.jpg" aria-label="Sound Factory lighting and production at a live event in motion" data-apollo-autoplay-video>
+            <source src="/event-ambience.mp4" type="video/mp4" />
+          </video>
         </figure>
         <div className="apollo-social__copy">
           <p className="apollo-kicker">Behind the scenes</p>

@@ -18,6 +18,11 @@ test("homepage opens with a cinematic local-video hero and a direct date inquiry
   assert.match(page, /className="apollo-hero__video" autoPlay muted loop playsInline/);
   assert.match(page, /className="apollo-feature__media" autoPlay muted loop playsInline/);
   assert.match(page, /src="\/wedding-confetti\.mp4"/);
+  assert.match(page, /className="apollo-service__media" autoPlay muted loop playsInline preload="metadata"/);
+  assert.match(page, /video:\s*"\/event-ambience\.mp4"/);
+  assert.match(page, /video:\s*"\/concert-production\.mp4"/);
+  assert.match(page, /className="apollo-social__media" autoPlay muted loop playsInline preload="metadata"/);
+  assert.match(page, /src="\/event-ambience\.mp4"/);
   assert.match(page, /href="#build-package"/);
   assert.match(page, />Plan your event <span aria-hidden="true">↗<\/span><\/a>/);
   assert.match(page, /className="apollo-event-rail"/);

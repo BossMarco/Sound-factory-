@@ -12,6 +12,19 @@ export function ApolloHomeMotion() {
     const mobileMediaQuery = window.matchMedia("(max-width: 720px)");
     const video = document.querySelector<HTMLVideoElement>(".apollo-hero__video");
     const autoplayVideos = Array.from(document.querySelectorAll<HTMLVideoElement>("[data-apollo-autoplay-video]"));
+    const visibleVideos = new Set<HTMLVideoElement>();
+    const playbackObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const autoplayVideo = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) visibleVideos.add(autoplayVideo);
+        else {
+          visibleVideos.delete(autoplayVideo);
+          autoplayVideo.pause();
+        }
+      });
+      if (!mediaQuery.matches) visibleVideos.forEach((autoplayVideo) => void autoplayVideo.play().catch(() => undefined));
+    }, { threshold: 0.15 });
+    autoplayVideos.forEach((autoplayVideo) => playbackObserver.observe(autoplayVideo));
     let context: gsap.Context | undefined;
 
     const startAnimations = () => {
@@ -42,7 +55,7 @@ export function ApolloHomeMotion() {
         return;
       }
 
-      autoplayVideos.forEach((autoplayVideo) => void autoplayVideo.play().catch(() => undefined));
+      visibleVideos.forEach((autoplayVideo) => void autoplayVideo.play().catch(() => undefined));
       startAnimations();
     };
 
@@ -51,6 +64,7 @@ export function ApolloHomeMotion() {
 
     return () => {
       mediaQuery.removeEventListener("change", syncMotionPreference);
+      playbackObserver.disconnect();
       stopAnimations();
     };
   });

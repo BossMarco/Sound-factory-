@@ -15,13 +15,22 @@
   background: #151719;
 }
 
-.apollo-social__image img {
+.apollo-social__image img,
+.apollo-social__media {
   object-fit: cover;
   object-position: center;
   transition: transform .7s cubic-bezier(.16, 1, .3, 1);
 }
 
-.apollo-social:hover .apollo-social__image img {
+.apollo-social__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.apollo-social:hover .apollo-social__image img,
+.apollo-social:hover .apollo-social__media {
   transform: scale(1.035);
 }
 
@@ -91,7 +100,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .apollo-social__image img,
+  .apollo-social__media,
   .apollo-social:hover .apollo-social__image img,
+  .apollo-social:hover .apollo-social__media,
   .apollo-social__link {
     transition: none;
     transform: none;
