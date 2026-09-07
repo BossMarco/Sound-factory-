@@ -72,6 +72,9 @@ test("homepage keeps service discovery and gives cinematic motion an accessible 
   assert.match(cloneStyles, /aspect-ratio:\s*4\s*\/\s*5/);
   assert.match(cloneStyles, /\.apollo-hero__video\s*\{\s*object-fit:\s*cover/);
   assert.doesNotMatch(cloneStyles, /\.apollo-hero__video\s*\{\s*object-fit:\s*contain/);
+  assert.match(cloneStyles, /\.apollo-intro\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*\.62fr\)\s*minmax\(0,\s*\.78fr\)/s);
+  assert.match(cloneStyles, /\.apollo-intro\s*\{[^}]*gap:\s*clamp\(32px,\s*6vw,\s*96px\)/s);
+  assert.match(cloneStyles, /\.apollo-intro\s+h2\s*\{[^}]*max-width:\s*none[^}]*font-size:\s*clamp\(3\.1rem,\s*6vw,\s*6\.4rem\)/s);
   assert.match(cloneStyles, /\.apollo-home\s+\.builder\s+(?:input|select|textarea)/);
   assert.match(cloneStyles, /-webkit-text-fill-color:\s*#101514/);
   assert.match(cloneStyles, /caret-color:\s*#101514/);

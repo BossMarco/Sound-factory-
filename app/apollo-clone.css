@@ -43,7 +43,8 @@
 
 .apollo-capabilities { background: #111714; border-color: rgba(226,245,235,.14); }
 .apollo-capabilities span { border-color: rgba(226,245,235,.14); color: #d5ddd8; }
-.apollo-intro { background: #18211e; color: #f3f7f3; }
+.apollo-intro { background: #18211e; color: #f3f7f3; grid-template-columns: minmax(0, .62fr) minmax(0, .78fr); gap: clamp(32px, 6vw, 96px); }
+.apollo-intro h2 { max-width: none; font-size: clamp(3.1rem, 6vw, 6.4rem); }
 .apollo-intro > p:last-child { color: #c2ccc6; }
 .apollo-feature { background: #111915; color: #f3f7f3; }
 .apollo-feature__copy > p:not(.apollo-kicker) { color: #c2ccc6; }
