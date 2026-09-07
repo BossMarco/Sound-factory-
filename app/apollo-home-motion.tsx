@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 export function ApolloHomeMotion() {
   useGSAP(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mobileMediaQuery = window.matchMedia("(max-width: 720px)");
     const video = document.querySelector<HTMLVideoElement>(".apollo-hero__video");
     const autoplayVideos = Array.from(document.querySelectorAll<HTMLVideoElement>("[data-apollo-autoplay-video]"));
     const visibleVideos = new Set<HTMLVideoElement>();
@@ -44,8 +43,6 @@ export function ApolloHomeMotion() {
     };
 
     const syncMotionPreference = () => {
-      if (video) video.poster = mobileMediaQuery.matches ? "/pexels-dj-loop-mobile.jpg" : "/concert-production.jpg";
-
       if (mediaQuery.matches) {
         autoplayVideos.forEach((autoplayVideo) => {
           autoplayVideo.pause();

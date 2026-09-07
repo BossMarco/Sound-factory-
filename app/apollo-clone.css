@@ -69,7 +69,7 @@
   .site-header .mobile-menu > div { top: 47px; right: -2px; width: min(270px, calc(100vw - 38px)); }
   .apollo-hero { position: relative; display: block; min-height: 0; padding: 0; }
   .apollo-hero__media { position: relative; inset: auto; z-index: 0; width: 100%; aspect-ratio: 9 / 16; overflow: hidden; background: #111915; }
-  .apollo-hero__video { object-fit: contain; }
+  .apollo-hero__video { object-fit: cover; }
   .apollo-hero__copy { top: auto; right: 26px; bottom: 40px; left: 26px; max-width: none; padding: 0; }
   .apollo-hero__copy h1 { max-width: 100%; font-size: clamp(3rem, 13vw, 4.75rem); overflow-wrap: anywhere; }
   .apollo-hero__copy > p:not(.apollo-kicker) { font-size: 1rem; }
