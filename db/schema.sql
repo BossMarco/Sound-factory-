@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS leads (
   package_name TEXT NOT NULL,
   selected_addons JSONB NOT NULL DEFAULT '[]'::jsonb,
   notes TEXT,
+  status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'booked', 'declined')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

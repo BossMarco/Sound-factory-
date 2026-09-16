@@ -1,11 +1,12 @@
 import { neon } from "@neondatabase/serverless";
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
 
-type MetricRow = { visits: string; leads: string };
+type MetricRow = { visits: string; leads: string; new_leads: string; contacted_leads: string; booked_leads: string; declined_leads: string };
 type TrafficBreakdownRow = { label: string; count: string };
 export type TrafficAttributionInput = { channel: string; source: string; referrerHost: string | null; utmSource: string | null; utmMedium: string | null; utmCampaign: string | null; city: string | null; state: string | null; country: string | null };
 export type TrafficBreakdown = { label: string; count: number };
-export type LeadRow = { id: number; name: string; email: string; phone: string; event_type: string; event_date: string | null; event_city: string | null; venue: string | null; package_name: string; selected_addons: string[]; notes: string | null; created_at: string };
+export type LeadStatus = "new" | "contacted" | "booked" | "declined";
+export type LeadRow = { id: number; name: string; email: string; phone: string; event_type: string; event_date: string | null; event_city: string | null; venue: string | null; package_name: string; selected_addons: string[]; notes: string | null; status: LeadStatus; created_at: string };
 export type UserRole = "owner" | "admin" | "staff";
 export type AdminUser = { id: number; email: string; name: string; role: UserRole; active: boolean; created_at: string; last_login_at: string | null };
 
@@ -34,6 +35,7 @@ async function ensureSchema(database: NonNullable<ReturnType<typeof sql>>) {
   if (!schemaReady) {
     schemaReady = (async () => {
       await database`CREATE TABLE IF NOT EXISTS leads (id BIGSERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, event_type TEXT NOT NULL, event_date DATE, event_city TEXT, venue TEXT, package_name TEXT NOT NULL, selected_addons JSONB NOT NULL DEFAULT '[]'::jsonb, notes TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
+      await database`ALTER TABLE leads ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
       await database`CREATE TABLE IF NOT EXISTS traffic_events (id BIGSERIAL PRIMARY KEY, event_name TEXT NOT NULL DEFAULT 'page_view', page_path TEXT NOT NULL, referrer TEXT, traffic_channel TEXT, traffic_source TEXT, referrer_host TEXT, utm_source TEXT, utm_medium TEXT, utm_campaign TEXT, city TEXT, state TEXT, country TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
       await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS traffic_channel TEXT`;
       await database`ALTER TABLE traffic_events ADD COLUMN IF NOT EXISTS traffic_source TEXT`;
@@ -71,7 +73,7 @@ async function audit(database: NonNullable<ReturnType<typeof sql>>, actorId: num
   await database`INSERT INTO admin_audit_log (actor_id, action, target_email, details) VALUES (${actorId}, ${action}, ${targetEmail || null}, ${JSON.stringify(details)})`;
 }
 
-export async function createLead(input: Omit<LeadRow, "id" | "created_at">) {
+export async function createLead(input: Omit<LeadRow, "id" | "created_at" | "status">) {
   const database = sql(); if (!database) throw new Error("Database is not configured.");
   await ensureSchema(database);
   await database`INSERT INTO leads (name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes) VALUES (${input.name}, ${input.email}, ${input.phone}, ${input.event_type}, ${input.event_date || null}, ${input.event_city || null}, ${input.venue || null}, ${input.package_name}, ${JSON.stringify(input.selected_addons)}, ${input.notes || null})`;
@@ -88,17 +90,31 @@ const breakdown = (rows: TrafficBreakdownRow[]): TrafficBreakdown[] => rows.map(
 export async function getDashboardData() {
   const database = sql(); if (!database) return null;
   await ensureSchema(database);
-  const [metric] = await database`SELECT (SELECT COUNT(*) FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days') AS visits, (SELECT COUNT(*) FROM leads WHERE created_at > NOW() - INTERVAL '30 days') AS leads` as MetricRow[];
+  const [metric] = await database`SELECT
+    (SELECT COUNT(*) FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days') AS visits,
+    (SELECT COUNT(*) FROM leads WHERE created_at > NOW() - INTERVAL '30 days') AS leads,
+    (SELECT COUNT(*) FROM leads WHERE status = 'new') AS new_leads,
+    (SELECT COUNT(*) FROM leads WHERE status = 'contacted') AS contacted_leads,
+    (SELECT COUNT(*) FROM leads WHERE status = 'booked') AS booked_leads,
+    (SELECT COUNT(*) FROM leads WHERE status = 'declined') AS declined_leads` as MetricRow[];
   const [sources, states, cities, campaigns, pages, leads] = await Promise.all([
     database`SELECT COALESCE(traffic_source, 'Unknown') AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' GROUP BY traffic_source ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
     database`SELECT state AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND state IS NOT NULL GROUP BY state ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
     database`SELECT CASE WHEN city IS NOT NULL AND state IS NOT NULL THEN city || ', ' || state WHEN city IS NOT NULL THEN city ELSE state END AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND (city IS NOT NULL OR state IS NOT NULL) GROUP BY city, state ORDER BY count DESC, label ASC LIMIT 8` as unknown as Promise<TrafficBreakdownRow[]>,
     database`SELECT utm_campaign AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' AND utm_campaign IS NOT NULL GROUP BY utm_campaign ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
     database`SELECT page_path AS label, COUNT(*) AS count FROM traffic_events WHERE created_at > NOW() - INTERVAL '30 days' GROUP BY page_path ORDER BY count DESC, label ASC LIMIT 6` as unknown as Promise<TrafficBreakdownRow[]>,
-    database`SELECT id, name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes, created_at FROM leads ORDER BY created_at DESC LIMIT 100` as unknown as Promise<LeadRow[]>,
+    database`SELECT id, name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes, status, created_at FROM leads ORDER BY CASE status WHEN 'new' THEN 0 WHEN 'contacted' THEN 1 WHEN 'booked' THEN 2 ELSE 3 END, created_at DESC LIMIT 100` as unknown as Promise<LeadRow[]>,
   ]);
   const visits = Number(metric?.visits || 0), leadCount = Number(metric?.leads || 0);
-  return { visits, leads: leadCount, conversion: visits ? (leadCount / visits) * 100 : 0, traffic: { sources: breakdown(sources), states: breakdown(states), cities: breakdown(cities), campaigns: breakdown(campaigns), pages: breakdown(pages) }, recentLeads: leads };
+  return { visits, leads: leadCount, conversion: visits ? (leadCount / visits) * 100 : 0, leadStatus: { new: Number(metric?.new_leads || 0), contacted: Number(metric?.contacted_leads || 0), booked: Number(metric?.booked_leads || 0), declined: Number(metric?.declined_leads || 0) }, traffic: { sources: breakdown(sources), states: breakdown(states), cities: breakdown(cities), campaigns: breakdown(campaigns), pages: breakdown(pages) }, recentLeads: leads };
+}
+
+export async function updateLeadStatus(actor: AdminUser, leadId: number, status: LeadStatus) {
+  const database = sql(); if (!database) return null;
+  await ensureSchema(database);
+  const [lead] = await database`UPDATE leads SET status = ${status} WHERE id = ${leadId} RETURNING id, name, email, phone, event_type, event_date, event_city, venue, package_name, selected_addons, notes, status, created_at` as LeadRow[];
+  if (lead) await audit(database, actor.id, "lead_status_updated", lead.email, { leadId, status });
+  return lead || null;
 }
 
 export async function authenticateAdmin(email: string, password: string) {

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { createLead } from "@/lib/db";
+import { NextRequest, NextResponse } from "next/server";
+import { LeadStatus, createLead, getAdminFromSession, updateLeadStatus } from "@/lib/db";
 import { sendLeadEmails } from "@/lib/lead-email";
 
 export async function POST(request: Request) {
@@ -35,4 +35,17 @@ export async function POST(request: Request) {
     console.error("Lead capture failed", error);
     return NextResponse.json({ error: "We couldn’t save your inquiry right now. Please email us directly." }, { status: 503 });
   }
+}
+
+const leadStatuses: LeadStatus[] = ["new", "contacted", "booked", "declined"];
+
+export async function PATCH(request: NextRequest) {
+  const user = await getAdminFromSession(request.cookies.get("sound_factory_admin")?.value);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const body = await request.json().catch(() => null);
+  const leadId = Number(body?.leadId);
+  const status = body?.status as LeadStatus | undefined;
+  if (!Number.isInteger(leadId) || !status || !leadStatuses.includes(status)) return NextResponse.json({ error: "Invalid lead update." }, { status: 400 });
+  const lead = await updateLeadStatus(user, leadId, status);
+  return lead ? NextResponse.json({ lead }) : NextResponse.json({ error: "Lead not found." }, { status: 404 });
 }
