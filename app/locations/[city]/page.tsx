@@ -4,6 +4,8 @@ import { TBadge, TCard } from "@treeui/react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Footer, Header, Inquiry } from "../../components";
+import { JsonLd, cityFaqs, faqSchema, BUSINESS } from "../../../lib/seo";
+import { cityContent } from "../../../lib/city-content";
 import { featuredServiceLinks, locations, rgvLocationSlugs, texasTravelLocationSlugs } from "../data";
 
 const allLocationSlugs = [...rgvLocationSlugs, ...texasTravelLocationSlugs];
@@ -18,10 +20,14 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     return {
       title: "Texas DJ and event production travel services",
       description: "Sound Factory Productions travels from the Rio Grande Valley for weddings, quinceañeras, corporate events, concerts, and public events across Texas.",
+      alternates: { canonical: "/locations/texas" },
     };
   }
   const place = locations[city];
+  const rich = cityContent[city];
+  if (rich) return { title: { absolute: `${rich.title} | Sound Factory` }, description: rich.description, alternates: { canonical: `/locations/${city}` } };
   return place ? {
+    alternates: { canonical: `/locations/${city}` },
     title: `DJ and event production in ${place.name}, TX`,
     description: `Sound Factory Productions is available for weddings, quinceañeras, corporate events, concerts, and celebrations in ${place.name}, Texas.`,
   } : {};
@@ -32,13 +38,15 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
   if (city === "texas") return <TexasTravelPage />;
   const place = locations[city];
   if (!place) notFound();
+  const rich = cityContent[city];
+  const faqs = cityFaqs(place.name, place.nearby);
 
   const morePlaces = (rgvLocationSlugs.includes(city as (typeof rgvLocationSlugs)[number]) ? rgvLocationSlugs : texasTravelLocationSlugs)
     .filter((slug) => slug !== city)
     .slice(0, 4)
     .map((slug) => ({ slug, name: locations[slug].name }));
 
-  return <><Header /><main><section className="page-hero"><p className="eyebrow">TEXAS DJ AND EVENT PRODUCTION</p><h1>DJ and event production in {place.name}, Texas</h1><p>Sound Factory Productions brings DJ entertainment, lighting, and event production to celebrations in {place.name} and throughout {place.region}.</p></section><section className="content"><div><p className="eyebrow">LOCAL EVENT SUPPORT</p><h2>Built around your event in {place.name}.</h2></div><div><p>For weddings, quinceañeras, private celebrations, corporate events, concerts, and public gatherings, we plan the music and production around your timeline, venue, and guests.</p><p>We also serve {place.nearby}.</p></div></section><section className="content"><div><h2>Explore event services.</h2></div><div><ul>{featuredServiceLinks.map((service) => <li key={service.href}><Link className="text-link" href={service.href}>{service.label} →</Link></li>)}</ul></div></section><section className="content"><div><h2>More Texas destinations.</h2></div><div><ul>{morePlaces.map((nearby) => <li key={nearby.slug}><Link className="text-link" href={`/locations/${nearby.slug}`}>DJ services in {nearby.name}, Texas →</Link></li>)}<li><Link className="text-link" href="/locations/texas">Texas travel services →</Link></li></ul></div></section><Inquiry title={`Planning an event in ${place.name}? Let’s connect.`} /></main><Footer /></>;
+  return <><Header /><main><section className="page-hero"><p className="eyebrow">TEXAS DJ AND EVENT PRODUCTION</p><h1>{rich ? rich.h1 : <>DJ and event production in {place.name}, Texas</>}</h1><p>{rich ? rich.intro : <>Sound Factory Productions brings DJ entertainment, lighting, and event production to celebrations in {place.name} and throughout {place.region}.</>}</p><p><a className="button" href={BUSINESS.phoneHref}>Call or text {BUSINESS.phoneDisplay}</a></p></section>{rich?.sections.map((sec) => <section className="content" key={sec.h}><div><h2>{sec.h}</h2></div><div>{sec.p.map((para) => <p key={para.slice(0, 24)}>{para}</p>)}</div></section>)}{rich && <section className="content"><div><h2>Plan your {place.name} event.</h2></div><div><ul><li><Link className="text-link" href={`/wedding-dj/${city}`}>Wedding DJ in {place.name} →</Link></li><li><Link className="text-link" href={`/quinceanera-dj/${city}`}>Quinceañera DJ in {place.name} →</Link></li><li><Link className="text-link" href="/#build-package">Build your package →</Link></li></ul></div></section>}<section className="content"><div><p className="eyebrow">LOCAL EVENT SUPPORT</p><h2>Built around your event in {place.name}.</h2></div><div><p>For weddings, quinceañeras, private celebrations, corporate events, concerts, and public gatherings, we plan the music and production around your timeline, venue, and guests.</p><p>We also serve {place.nearby}.</p></div></section><section className="content"><div><h2>Explore event services.</h2></div><div><ul>{featuredServiceLinks.map((service) => <li key={service.href}><Link className="text-link" href={service.href}>{service.label} →</Link></li>)}</ul></div></section><section className="content"><div><h2>More Texas destinations.</h2></div><div><ul>{morePlaces.map((nearby) => <li key={nearby.slug}><Link className="text-link" href={`/locations/${nearby.slug}`}>DJ services in {nearby.name}, Texas →</Link></li>)}<li><Link className="text-link" href="/locations/texas">Texas travel services →</Link></li></ul></div></section><section className="content"><div><p className="eyebrow">FAQ</p><h2>{place.name} DJ questions.</h2></div><div>{faqs.map((f) => <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>)}</div></section><JsonLd data={faqSchema(faqs)} /><Inquiry title={`Planning an event in ${place.name}? Let’s connect.`} /></main><Footer /></>;
 }
 
 function TexasTravelPage() {

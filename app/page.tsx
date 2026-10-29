@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Footer, Header, Inquiry } from "./components";
@@ -18,6 +19,8 @@ const services = [
 const capabilities = ["DJ + MC", "Lighting design", "LED screens", "Cold sparklers", "Custom dance floors", "Photo booths"];
 const cities = ["McAllen", "Edinburg", "Mission", "Weslaco", "Pharr", "Harlingen", "Brownsville"];
 
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return <>
     <Header />
@@ -32,7 +35,7 @@ export default function Home() {
           <div className="apollo-hero__shade" />
           <div className="apollo-hero__copy" data-apollo-hero-copy>
             <p className="apollo-kicker">Sound Factory presents</p>
-            <h1>Make it<br />unforgettable.</h1>
+            <h1>Make it<br />unforgettable.<span className="hero-seo-line">Wedding &amp; quinceañera DJ in McAllen, Brownsville &amp; the RGV</span></h1>
             <p>DJs, lighting, LED visuals, and production that keeps every entrance, toast, and dance floor on cue.</p>
             <a className="apollo-button" href="#build-package">Plan your event <span aria-hidden="true">↗</span></a>
           </div>
