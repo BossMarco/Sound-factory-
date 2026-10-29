@@ -10,7 +10,7 @@ export function Header({ locale = "en" }: { locale?: "en" | "es" }) {
 }
 
 export function Footer({ locale = "en" }: { locale?: "en" | "es" }) {
-  const es = locale === "es"; return <footer><div className="footer-brand">SOUND FACTORY PRODUCTIONS</div><p>{es ? "DJ en McAllen para todo el Valle del Río Grande." : "McAllen DJ serving the Rio Grande Valley."}</p><a href={`mailto:${email}`}>{email}</a><p className="fine">© {new Date().getFullYear()} Sound Factory Productions. {es ? "Todos los derechos reservados." : "All rights reserved."}</p><p className="footer-links"><Link href="/admin">{es ? "Administración" : "Admin"}</Link><span>·</span><a href="https://bossleveltech.com" target="_blank" rel="noreferrer">{es ? "Desarrollado por Boss Level Tech" : "Powered by Boss Level Tech"}</a></p></footer>;
+  const es = locale === "es"; return <footer><div className="footer-brand">SOUND FACTORY PRODUCTIONS</div><p>{es ? "DJ para bodas y quinceañeras en McAllen, Brownsville y todo el Valle." : "Wedding & quinceañera DJ serving McAllen, Brownsville, Harlingen & the Rio Grande Valley."}</p><p>Sound Factory Productions · McAllen, TX · <a href="tel:+19565433188">(956) 543-3188</a></p><a href={`mailto:${email}`}>{email}</a><p className="fine">© {new Date().getFullYear()} Sound Factory Productions. {es ? "Todos los derechos reservados." : "All rights reserved."}</p><p className="footer-links"><Link href="/admin">{es ? "Administración" : "Admin"}</Link><span>·</span><a href="https://bossleveltech.com" target="_blank" rel="noreferrer">{es ? "Desarrollado por Boss Level Tech" : "Powered by Boss Level Tech"}</a></p></footer>;
 }
 
 export function Inquiry({ title = "Let’s make your event unforgettable.", locale = "en" }: { title?: string; locale?: "en" | "es" }) {

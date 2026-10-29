@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { TrafficTracker } from "./traffic-tracker";
 import { ContactActions } from "./contact-actions";
+import { JsonLd, businessSchema } from "../lib/seo";
 import "./globals.css";
 import "./home-overrides.css";
 import "./builder.css";
@@ -24,9 +25,9 @@ import "./contact-actions.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.soundfactoryrgv.com"),
-  title: { default: "Sound Factory Productions | McAllen DJ", template: "%s | Sound Factory Productions" },
-  description: "Sound Factory Productions is a DJ in McAllen, Texas serving celebrations and events across the Rio Grande Valley.",
-  keywords: ["DJ McAllen", "Rio Grande Valley DJ", "event DJ", "wedding DJ McAllen"],
+  title: { default: "Wedding & Quinceañera DJ in McAllen, Brownsville & the RGV | Sound Factory", template: "%s | Sound Factory Productions" },
+  description: "Bilingual wedding & quinceañera DJ, MC, sound, lighting, and LED production for McAllen, Brownsville, Harlingen, Edinburg, and the whole Rio Grande Valley. Call or text (956) 543-3188.",
+  keywords: ["DJ McAllen", "DJ Brownsville", "wedding DJ Brownsville", "wedding DJ McAllen", "quinceañera DJ", "Rio Grande Valley DJ", "RGV DJ"],
   icons: { icon: "/icon.png", apple: "/icon.png" },
   openGraph: { type: "website", locale: "en_US", siteName: "Sound Factory Productions", images: [{ url: "/factory-rgv-social.jpg", width: 1200, height: 630, alt: "Factory RGV event production logo" }] },
   twitter: { card: "summary_large_image", images: ["/factory-rgv-social.jpg"] },
@@ -34,5 +35,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}<ContactActions /><TrafficTracker /><Analytics /></body></html>;
+  return <html lang="en"><body><JsonLd data={businessSchema()} />{children}<ContactActions /><TrafficTracker /><Analytics /></body></html>;
 }

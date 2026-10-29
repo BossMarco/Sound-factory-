@@ -11,7 +11,8 @@ const servicePaths = [
   "/services/concert-production",
 ];
 const locationPaths = ["/locations/texas", ...[...rgvLocationSlugs, ...texasTravelLocationSlugs].map((city) => `/locations/${city}`)];
-const paths = ["", "/gallery", ...servicePaths, ...locationPaths];
+const cityServicePaths = ["brownsville", "mcallen"].flatMap((c) => [`/wedding-dj/${c}`, `/quinceanera-dj/${c}`]);
+const paths = ["", "/gallery", ...servicePaths, ...locationPaths, ...cityServicePaths];
 const spanishPaths = ["", ...servicePaths, ...locationPaths];
 
 export default function sitemap(): MetadataRoute.Sitemap {

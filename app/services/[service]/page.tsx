@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header, Inquiry } from "../../components";
+import { JsonLd, cityFaqs, faqSchema } from "../../../lib/seo";
 
 type ServiceMedia = {
   eyebrow: string;
@@ -146,7 +147,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { service } = await params;
   const item = services[service];
-  return item ? { title: item.title, description: item.description } : {};
+  return item ? { title: item.title, description: item.description, alternates: { canonical: `/services/${service}` } } : {};
 }
 
 export default async function ServicePage({
@@ -162,6 +163,7 @@ export default async function ServicePage({
   return (
     <>
       <Header />
+      <JsonLd data={faqSchema(cityFaqs("the Rio Grande Valley", "McAllen, Brownsville, Harlingen, Edinburg, and Mission"))} />
       <main>
         <section className="page-hero">
           <p className="eyebrow">SOUND FACTORY PRODUCTIONS</p>
