@@ -12,7 +12,7 @@ const servicePaths = [
 ];
 const locationPaths = ["/locations/texas", ...[...rgvLocationSlugs, ...texasTravelLocationSlugs].map((city) => `/locations/${city}`)];
 const cityServicePaths = ["brownsville", "mcallen"].flatMap((c) => [`/wedding-dj/${c}`, `/quinceanera-dj/${c}`]);
-const paths = ["", "/gallery", ...servicePaths, ...locationPaths, ...cityServicePaths];
+const paths = ["", "/gallery", "/contact", ...servicePaths, ...locationPaths, ...cityServicePaths];
 const spanishPaths = ["", ...servicePaths, ...locationPaths];
 
 export default function sitemap(): MetadataRoute.Sitemap {

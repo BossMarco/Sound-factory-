@@ -1,2 +1,2 @@
 import type { MetadataRoute } from "next";
-export default function robots(): MetadataRoute.Robots { return { rules: { userAgent: "*", allow: "/" }, sitemap: "https://www.soundfactoryrgv.com/sitemap.xml" }; }
+export default function robots(): MetadataRoute.Robots { return { rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] }, sitemap: "https://www.soundfactoryrgv.com/sitemap.xml" }; }

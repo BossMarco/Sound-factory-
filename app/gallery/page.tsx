@@ -6,7 +6,8 @@ import { GalleryMotion } from "./gallery-motion";
 import styles from "./gallery.module.css";
 
 export const metadata: Metadata = {
-  title: "Gallery | Sound Factory Productions",
+  title: "Event Gallery: Weddings, Quinceañeras & Live Events",
+  alternates: { canonical: "/gallery" },
   description: "Explore Sound Factory Productions event media from weddings, celebrations, cheer events, concerts, and production setups across the Rio Grande Valley.",
 };
 

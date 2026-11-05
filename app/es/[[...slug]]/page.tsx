@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,6 +8,18 @@ import { locations, rgvLocationSlugs, texasTravelLocationSlugs } from "../../loc
 
 const cities: Record<string, string> = { texas: "todo Texas", ...Object.fromEntries([...rgvLocationSlugs, ...texasTravelLocationSlugs].map((slug) => [slug, locations[slug].name])) };
 const services: Record<string, { name: string; text: string }> = { "wedding-dj": { name: "DJ para Bodas", text: "Música, producción y momentos que acompañan cada parte de tu celebración." }, "quinceanera-dj": { name: "DJ para Quinceañeras", text: "Una experiencia elegante, energética y diseñada para una noche inolvidable." }, "cheerleading-event-dj": { name: "DJ para Eventos de Cheerleading", text: "Sonido, energía y producción para showcases, competencias, premiaciones y celebraciones de equipo." }, "private-event-dj": { name: "DJ para Eventos Privados", text: "Música y ambiente para cumpleaños, aniversarios, graduaciones, reuniones y celebraciones especiales." }, "corporate-event-dj": { name: "DJ para Eventos Corporativos", text: "Producción profesional para fiestas de empresa, activaciones de marca y celebraciones de equipo." }, "concert-production": { name: "Conciertos y Eventos Públicos", text: "Audio, iluminación, pantallas LED y producción lista para escenarios y público en vivo." } };
+
+export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }): Promise<Metadata> {
+  const { slug = [] } = await params;
+  const enPath = slug.length ? `/${slug.join("/")}` : "/";
+  const esPath = slug.length ? `/es/${slug.join("/")}` : "/es";
+  const alternates = { canonical: esPath, languages: { "en-US": enPath, "es-US": esPath, "x-default": enPath } };
+  const og = { locale: "es_US", url: esPath };
+  if (!slug.length) return { title: { absolute: "DJ para Bodas y Quinceañeras en McAllen y el Valle | Sound Factory" }, description: "DJ bilingüe, MC, sonido, iluminación y pantallas LED para bodas, quinceañeras y eventos en McAllen, Brownsville, Edinburg, Harlingen y todo el Valle del Río Grande. Llama o envía texto al (956) 543-3188.", alternates, openGraph: { ...og, title: "DJ para Bodas y Quinceañeras en el Valle | Sound Factory" } };
+  if (slug[0] === "services" && services[slug[1]]) { const s = services[slug[1]]; return { title: { absolute: `${s.name} en McAllen y el Valle del Río Grande | Sound Factory` }, description: `${s.text} Sound Factory Productions — McAllen, Brownsville y todo el Valle. Llama al (956) 543-3188.`, alternates, openGraph: og }; }
+  if (slug[0] === "locations" && cities[slug[1]]) { const c = cities[slug[1]]; const statewide = c === "todo Texas"; return { title: { absolute: statewide ? "DJ y Producción para Eventos en Todo Texas | Sound Factory" : `DJ en ${c}, Texas para Bodas y Quinceañeras | Sound Factory` }, description: statewide ? "Sound Factory Productions viaja desde McAllen para bodas, quinceañeras, eventos corporativos y conciertos en todo Texas." : `DJ bilingüe para bodas, quinceañeras y eventos en ${c}, Texas. Sonido, iluminación y producción de Sound Factory. Llama al (956) 543-3188.`, alternates, openGraph: og }; }
+  return {};
+}
 
 export function generateStaticParams() { return [[], ["services", "wedding-dj"], ["services", "quinceanera-dj"], ["services", "cheerleading-event-dj"], ["services", "private-event-dj"], ["services", "corporate-event-dj"], ["services", "concert-production"], ...Object.keys(cities).map((city) => ["locations", city])].map((slug) => ({ slug })); }
 export default async function SpanishPage({ params }: { params: Promise<{ slug?: string[] }> }) { const { slug = [] } = await params; if (!slug.length) return <Home />; if (slug[0] === "services" && services[slug[1]]) return <Service item={services[slug[1]]} />; if (slug[0] === "locations" && cities[slug[1]]) return <City city={cities[slug[1]]} />; notFound(); }
