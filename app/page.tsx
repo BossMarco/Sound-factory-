@@ -19,7 +19,7 @@ const services = [
 const capabilities = ["DJ + MC", "Lighting design", "LED screens", "Cold sparklers", "Custom dance floors", "Photo booths"];
 const cities = ["McAllen", "Edinburg", "Mission", "Weslaco", "Pharr", "Harlingen", "Brownsville"];
 
-export const metadata: Metadata = { alternates: { canonical: "/" } };
+export const metadata: Metadata = { alternates: { canonical: "/", languages: { "en-US": "/", "es-US": "/es", "x-default": "/" } } };
 
 export default function Home() {
   return <>
